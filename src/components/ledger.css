@@ -1,0 +1,160 @@
+.ledger {
+  position: relative;
+  border-radius: 10px;
+  background: linear-gradient(#fcf9f0, #f3eddd);
+  box-shadow: 0 16px 32px rgba(0, 13, 8, 0.38);
+}
+
+.ledger-margin {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 72px;
+  width: 4px;
+  border-left: 1.2px solid #e9a79c;
+  border-right: 1.2px solid #e9a79c;
+}
+
+.ledger-holes {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 60px 0;
+}
+
+.ledger-holes i {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #0d3e32;
+  box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.4);
+}
+
+.ledger-table {
+  padding: 0 28px 0 100px;
+}
+
+.ledger-row {
+  display: grid;
+  align-items: center;
+  min-height: 60px;
+  border-bottom: 1px solid #cbd8dd;
+  font-size: 14px;
+}
+
+.ledger-row.head {
+  min-height: 56px;
+  border-bottom: 1.5px solid #e9a79c;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.ledger-row.clickable {
+  cursor: pointer;
+}
+
+.ledger-row.clickable:hover {
+  background: rgba(15, 74, 60, 0.05);
+}
+
+.ledger-row.marked {
+  background: rgba(255, 233, 163, 0.75);
+}
+
+.ledger-row .cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding-right: 12px;
+}
+
+.ledger-row .chev {
+  color: var(--ink-mute);
+}
+
+.ledger-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 68px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+
+.ledger-empty {
+  padding: 28px 0;
+  color: var(--ink-soft);
+  font-size: 14px;
+}
+
+.ledger.compact .ledger-margin {
+  left: 58px;
+}
+
+.ledger.compact .ledger-holes {
+  left: 20px;
+  padding: 50px 0;
+}
+
+.ledger.compact .ledger-holes i {
+  width: 16px;
+  height: 16px;
+}
+
+.ledger.compact .ledger-holes i:nth-child(2) {
+  display: none;
+}
+
+.ledger.compact .ledger-table {
+  padding-left: 84px;
+}
+
+.ledger.compact .ledger-row {
+  min-height: 52px;
+}
+
+.ledger.compact .ledger-row.head {
+  min-height: 42px;
+}
+
+.ledger.compact .ledger-row:last-child {
+  border-bottom: 0;
+}
+
+.pager {
+  display: flex;
+  gap: 6px;
+}
+
+.pager button {
+  padding: 8px 12px;
+  border: 1px solid #d8ceb4;
+  border-radius: 9px;
+  background: none;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.pager button:disabled {
+  color: #b5ac95;
+  cursor: default;
+}
+
+.pager button.on {
+  border-color: var(--desk);
+  background: var(--desk);
+  color: var(--cream);
+}
+
+.cell .strike,
+.strike {
+  text-decoration: line-through;
+  color: var(--void);
+}

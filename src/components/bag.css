@@ -1,0 +1,87 @@
+.bag {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 58px 24px 28px;
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.12) 50%, rgba(255, 255, 255, 0.22));
+  overflow: hidden;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.bag.droppable {
+  cursor: pointer;
+}
+
+.bag.droppable:hover,
+.bag.over {
+  border-color: rgba(255, 255, 255, 0.75);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0.18) 50%, rgba(255, 255, 255, 0.28));
+}
+
+.bag-zip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.bag-zip::before,
+.bag-zip::after {
+  content: '';
+  position: absolute;
+  left: 18px;
+  right: 18px;
+}
+
+.bag-zip::before {
+  top: 28px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--red);
+}
+
+.bag-zip::after {
+  top: 35px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.5);
+}
+
+.bag-shine {
+  position: absolute;
+  left: 22px;
+  top: 54px;
+  bottom: 18px;
+  width: 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.22);
+  transform: rotate(8deg);
+}
+
+.bag-label {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  padding: 20px 22px;
+  border-radius: 10px;
+  background: #fffdf7;
+  box-shadow: 0 2px 6px rgba(0, 13, 8, 0.15);
+  text-align: center;
+}
+
+.bag-label h3 {
+  font-size: 18px;
+}
+
+.bag-label p {
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.bag-label .bag-icon {
+  color: var(--desk);
+  margin-bottom: 8px;
+}

@@ -1,0 +1,135 @@
+.tape-h,
+.tape-v {
+  position: relative;
+}
+
+.tape-bg {
+  position: absolute;
+  inset: 0;
+  filter: drop-shadow(0 14px 22px rgba(0, 13, 8, 0.38));
+}
+
+.tape-h-grid {
+  position: relative;
+  display: grid;
+  padding: 38px 22px 38px 10px;
+}
+
+.tape-h-seg {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+  min-height: 138px;
+  padding: 0 18px;
+}
+
+.tape-h-link {
+  position: absolute;
+  right: -13px;
+  top: 50%;
+  margin-top: -7px;
+  display: flex;
+  background: #fbf7ec;
+}
+
+.tape-v-list {
+  position: relative;
+  padding: 18px 44px 30px;
+}
+
+.tape-v-entry {
+  padding: 13px 0;
+}
+
+.tape-v-entry.hot {
+  padding: 13px 12px;
+  border-radius: 8px;
+  background: #e7efdf;
+}
+
+.tape-v-joint {
+  position: relative;
+  height: 22px;
+  display: flex;
+  justify-content: center;
+}
+
+.tape-v-joint::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 11px;
+  border-top: 1px dashed var(--line-2);
+}
+
+.tape-v-joint svg {
+  position: relative;
+}
+
+/* isi entri yang dipakai berulang */
+
+.entry-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.entry-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+}
+
+.entry-title b {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.entry-title .mono {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+
+.entry-time {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.entry-who {
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.entry-note {
+  margin-top: 2px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.entry-meta {
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-mute);
+  white-space: pre;
+}
+
+.pin {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--red);
+  flex: none;
+}

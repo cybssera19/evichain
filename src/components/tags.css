@@ -1,0 +1,110 @@
+.barcode {
+  display: block;
+}
+
+.mini-tag {
+  position: absolute;
+  width: 70px;
+  height: 112px;
+  transform: rotate(var(--tilt));
+  transition: transform 0.2s ease;
+}
+
+.mini-tag:hover {
+  transform: rotate(var(--tilt)) translateY(-10px);
+  z-index: 5;
+}
+
+.mini-tag-shape {
+  position: absolute;
+  inset: 0;
+  filter: drop-shadow(0 3px 3px rgba(31, 20, 0, 0.16));
+}
+
+.mini-tag-string {
+  position: absolute;
+  left: 20px;
+  top: -21px;
+}
+
+.mini-tag-id {
+  position: absolute;
+  left: 9px;
+  top: 32px;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+}
+
+.mini-tag-name {
+  position: absolute;
+  left: 9px;
+  top: 54px;
+  width: 54px;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 13px;
+  color: var(--ink-soft);
+}
+
+.mini-tag-code {
+  position: absolute;
+  left: 9px;
+  top: 90px;
+}
+
+.mini-tag.voided .mini-tag-id {
+  color: var(--void);
+  text-decoration: line-through;
+}
+
+.mini-tag.voided .mini-tag-name {
+  color: var(--void);
+}
+
+.big-tag {
+  position: relative;
+  flex: none;
+}
+
+.big-tag-shape {
+  position: absolute;
+  inset: 0;
+  filter: drop-shadow(0 18px 24px rgba(0, 13, 8, 0.4));
+}
+
+.big-tag-body {
+  position: relative;
+  padding: 0 32px 32px;
+}
+
+.stamp-lg {
+  padding: 7px 14px;
+  border-width: 2.5px;
+  border-radius: 9px;
+  font-size: 18px;
+  font-weight: 700;
+  transform: rotate(-8deg);
+  opacity: 0.92;
+}
+
+.role-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 9px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.role-chip.tint {
+  background: var(--paper-3);
+}
+
+.role-chip.light {
+  background: #fbf7ec;
+  border: 1px solid var(--line);
+}
