@@ -1,0 +1,236 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Activity log
+   Scoped under `.actlog` to beat the global `.main button` / `input` rules.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.actlog {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 0 0 40px;
+  min-height: 0;
+  font-family: var(--font-ui);
+}
+
+.actlog .actlog-mono { font-family: var(--font-mono); }
+
+/* ── Head ─────────────────────────────────────────────────────────────── */
+.actlog .actlog-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 30px;
+}
+.actlog .actlog-head h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(27px, 3vw, 36px);
+  color: var(--cream);
+}
+.actlog .actlog-total {
+  font-size: 13px;
+  color: var(--mute);
+  white-space: nowrap;
+}
+
+/* ── Toolbar ──────────────────────────────────────────────────────────── */
+.actlog .actlog-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.actlog .actlog-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.actlog .actlog-search svg {
+  position: absolute;
+  left: 11px;
+  color: var(--mute);
+  pointer-events: none;
+}
+.actlog .actlog-search input {
+  width: 248px;
+  min-width: 0;
+  padding: 9px 12px 9px 31px;
+  border: 1px solid rgba(246, 241, 228, .22);
+  border-radius: 10px;
+  background: rgba(246, 241, 228, .07);
+  color: var(--cream);
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+  box-shadow: none;
+  transition: border-color .15s, background .15s;
+}
+.actlog .actlog-search input::placeholder { color: var(--mute); }
+.actlog .actlog-search input:focus {
+  border-color: rgba(246, 241, 228, .4);
+  background: rgba(246, 241, 228, .1);
+  box-shadow: none;
+}
+
+.actlog .actlog-tabs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.actlog .actlog-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 13px;
+  border: 1px solid rgba(246, 241, 228, .2);
+  border-radius: 22px;
+  background: transparent;
+  color: var(--cream);
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  transition: background .15s, border-color .15s, color .15s;
+}
+.actlog .actlog-tab:hover:not(:disabled) {
+  background: rgba(246, 241, 228, .1);
+  filter: none;
+}
+.actlog .actlog-tab.is-on {
+  background: var(--cream);
+  border-color: var(--cream);
+  color: var(--ink);
+  font-weight: 600;
+}
+.actlog .actlog-tab b {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--mute);
+}
+.actlog .actlog-tab.is-on b { color: var(--ink-mute); }
+
+.actlog .actlog-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── Table ────────────────────────────────────────────────────────────── */
+.actlog .actlog-table-wrap {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--paper);
+  box-shadow: var(--shadow-paper);
+  scrollbar-width: thin;
+}
+
+.actlog .actlog-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.actlog .actlog-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 12px 16px;
+  text-align: left;
+  background: var(--desk);
+  color: var(--cream);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border-bottom: 0;
+}
+.actlog .actlog-table thead th:first-child { border-radius: 13px 0 0 0; }
+.actlog .actlog-table thead th:last-child { border-radius: 0 13px 0 0; }
+
+.actlog .actlog-table tbody td {
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--line);
+  font-size: 12.5px;
+  vertical-align: middle;
+}
+.actlog .actlog-table tbody tr:nth-child(even) td { background: rgba(237, 230, 212, .4); }
+.actlog .actlog-table tbody tr:last-child td { border-bottom: 0; }
+.actlog .actlog-table tbody tr { cursor: pointer; }
+.actlog .actlog-table tbody tr:hover td { background: var(--paper-3); }
+
+.actlog .actlog-time { color: var(--ink-soft); white-space: nowrap; }
+.actlog .actlog-id { font-weight: 600; color: var(--desk); white-space: nowrap; }
+.actlog .actlog-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+.actlog .actlog-action b { font-weight: 600; }
+.actlog .actlog-detail {
+  color: var(--ink-soft);
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.actlog .actlog-block,
+.actlog .actlog-tx { color: var(--ink-mute); font-size: 11.5px; white-space: nowrap; }
+
+.actlog .actlog-empty-row td {
+  padding: 38px 16px;
+  text-align: center;
+  color: var(--ink-mute);
+  cursor: default;
+}
+.actlog .actlog-empty-row { cursor: default; }
+
+/* ── Pager ────────────────────────────────────────────────────────────── */
+.actlog .actlog-pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.actlog .actlog-range { font-size: 12px; color: var(--mute); }
+.actlog .actlog-pages { display: flex; align-items: center; gap: 5px; }
+.actlog .actlog-page {
+  padding: 7px 12px;
+  border: 1px solid rgba(246, 241, 228, .2);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--cream);
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background .15s, border-color .15s, color .15s;
+}
+.actlog .actlog-page:hover:not(:disabled) {
+  background: rgba(246, 241, 228, .1);
+  filter: none;
+}
+.actlog .actlog-page.is-on {
+  background: var(--cream);
+  border-color: var(--cream);
+  color: var(--ink);
+  font-weight: 600;
+}
+.actlog .actlog-page:disabled { opacity: .4; cursor: not-allowed; }
+
+@media (max-width: 640px) {
+  .actlog .actlog-search { flex: 1; }
+  .actlog .actlog-search input { width: 100%; }
+}
