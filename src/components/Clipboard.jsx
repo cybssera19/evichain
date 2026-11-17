@@ -36,7 +36,7 @@ export function ClipHead({ title, sub, onClose }) {
         {sub && <p className="muted">{sub}</p>}
       </div>
       {onClose && (
-        <button className="icon-btn" onClick={onClose} aria-label="Tutup">
+        <button className="icon-btn" onClick={onClose} aria-label="Close">
           <Close />
         </button>
       )}

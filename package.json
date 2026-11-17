@@ -6,18 +6,35 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start:local": "powershell -ExecutionPolicy Bypass -File scripts/start-local.ps1",
+    "admin:local": "node scripts/admin-local.mjs",
+    "chain": "hardhat node --hostname 127.0.0.1",
+    "compile:contract": "hardhat compile",
+    "deploy:local": "hardhat run scripts/deploy.cjs --network localhost",
+    "upgrade:local": "hardhat run scripts/upgrade-local.cjs --network localhost",
+    "api": "node server/index.js"
   },
   "dependencies": {
     "@fontsource/bricolage-grotesque": "^5.3.0",
     "@fontsource/dm-mono": "^5.3.0",
     "@fontsource/figtree": "^5.3.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.10",
+    "ethers": "^6.17.0",
+    "express": "^5.3.0",
+    "multer": "^2.5.0",
+    "pg": "^8.23.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-router-dom": "^7.18.0"
+    "react-router-dom": "^7.18.0",
+    "siwe": "^3.0.0"
   },
   "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
     "@vitejs/plugin-react": "^5.0.0",
+    "hardhat": "^2.29.2",
     "vite": "^7.0.0"
   }
 }

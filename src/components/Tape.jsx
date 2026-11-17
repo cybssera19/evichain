@@ -5,7 +5,6 @@ import './tape.css'
 
 const HOLE = '#0C3B30'
 
-// kertas printer sambung, mendatar
 export function TapeH({ segments, bars = true, className = '' }) {
   const [ref, { width: W, height: H }] = useSize()
   const n = segments.length
@@ -52,7 +51,6 @@ export function TapeH({ segments, bars = true, className = '' }) {
   )
 }
 
-// kertas sambung tegak, dipakai untuk jejak custody
 export function TapeV({ entries, highlightLast, highlightFirst, className = '' }) {
   const [ref, { width: W, height: H }] = useSize()
 

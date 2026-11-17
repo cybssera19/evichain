@@ -39,11 +39,10 @@ export function RowTag({ status, size = 20 }) {
   )
 }
 
-// label kecil yang nyembul dari dalam map
 export function MiniTag({ item, tilt = 0, short }) {
   const voided = item.status === 'Voided'
   return (
-    <Link to={`/bukti/${item.id}`} className={`mini-tag ${voided ? 'voided' : ''}`} style={{ '--tilt': `${tilt}deg` }}>
+    <Link to={`/evidence/${item.id}`} className={`mini-tag ${voided ? 'voided' : ''}`} style={{ '--tilt': `${tilt}deg` }}>
       <svg className="mini-tag-string" width="30" height="34" viewBox="0 0 30 34">
         <path d="M15 33C12 24 22 18 18 10C15 4 20 1 24 0" stroke="#6E5C38" strokeWidth="1.3" fill="none" strokeLinecap="round" />
       </svg>

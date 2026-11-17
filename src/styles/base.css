@@ -209,8 +209,6 @@ p {
   letter-spacing: 0;
 }
 
-/* buttons */
-
 .btn {
   display: inline-flex;
   align-items: center;
@@ -287,8 +285,6 @@ p {
   width: 100%;
 }
 
-/* paper surfaces */
-
 .paper {
   background: linear-gradient(var(--paper), var(--paper-2));
   border-radius: 16px;
@@ -303,8 +299,6 @@ p {
   font-size: 19px;
   margin-bottom: 14px;
 }
-
-/* form */
 
 .field {
   display: flex;
@@ -376,8 +370,6 @@ select.input {
   grid-template-columns: 1fr 1fr;
   gap: 14px;
 }
-
-/* small parts */
 
 .dot {
   display: inline-block;

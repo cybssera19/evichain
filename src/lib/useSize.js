@@ -1,6 +1,5 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 
-// ukuran termasuk padding, dipakai untuk menggambar bentuk SVG di belakang konten
 export function useSize() {
   const ref = useRef(null)
   const [size, setSize] = useState({ width: 0, height: 0 })

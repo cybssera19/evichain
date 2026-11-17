@@ -1,68 +1,64 @@
-# EviChain Frontend
+# EviChain
 
-Frontend untuk dApp chain of custody barang bukti digital. Dibuat dengan React + Vite.
+A wallet-based application for tracking digital evidence and chain of custody.
 
-## Menjalankan
+## Run locally
 
-```bash
-npm install
-npm run dev
+Requires Node.js 22, Docker Desktop, PowerShell, and MetaMask.
+
+```powershell
+npm ci
+npm run start:local
 ```
 
-Buka `http://localhost:5173`, lalu masuk lewat MetaMask (masih simulasi).
+Open **http://127.0.0.1:5173**. Startup launches PostgreSQL, Hardhat, the API, and the frontend. It deploys contracts and creates `.env` when needed.
 
-Akun untuk dicoba di halaman Pilih akun:
+## Sign in
 
-| Akun | Nama | Role |
-| --- | --- | --- |
-| Akun 1 | Rina Hartono | Admin |
-| Akun 2 | Bima Prasetyo | Penyidik |
-| Akun 3 | Dewi Lestari | Penyidik |
-| Akun 4 | Andi Wijaya | Analis |
-| Akun 5 | Sari Kusuma | Analis |
-| Akun 6 | Hendra Gunawan | Auditor |
-| Akun baru | | belum terdaftar, buat cek layar ditolak |
+1. Click **Add / select local network**. RPC: `http://127.0.0.1:8545`. Chain ID: `31337`.
+2. Connect MetaMask and sign the login message. Signing in does not cost gas.
+3. New users enter their profile and request Investigator, Analyst, or Auditor access. An Admin approves the role. Sign in again after approval.
 
-## Yang sudah jalan
+For the local Admin account, run `npm run admin:local`. Import the displayed development key into MetaMask and sign in. This publicly known account is for local development only. Never use it for real funds or public deployments.
 
-- Login 3 langkah (hubungkan, pilih akun, tanda tangan SIWE) dan layar wallet belum terdaftar
-- Dashboard penyidik dan dashboard admin
-- Daftar barang bukti dengan pencarian dan filter status
-- Detail bukti: transfer custody, ubah status, edit metadata, jejak custody, cek integritas cepat
-- Registrasi bukti, hash SHA-256 dihitung langsung di browser
-- Verifikasi integritas file atau hash yang ditempel, beserta riwayatnya
-- Kasus, detail kasus, tambah dan edit kasus
-- Pengguna (tambah, edit, hapus) dan log aktivitas untuk admin
-- Profil dan sesi login
+## Roles and workflow
 
-Menu menyesuaikan role. Registrasi hanya untuk Penyidik, Pengguna dan Log hanya untuk Admin.
+| Role | Access |
+| --- | --- |
+| Admin | Assign roles, manage cases, void evidence, and recover custody after a holder loses access |
+| Investigator | Register evidence, update held evidence, transfer custody, and release or dispose of evidence |
+| Analyst | Record analysis and transfer held evidence |
+| Auditor | View cases and evidence, inspect history, and verify file hashes |
 
-## Data dan blockchain
+Evidence registration requires a case under Investigation. Filing blocks new registrations. A case can close only when it has no active evidence. Cases that have held evidence cannot be deleted; deleted case IDs cannot be reused. Voiding evidence preserves its hash and history.
 
-Semua data masih dari `src/data/seed.js` dan disimpan di memori, jadi kembali ke awal kalau halaman di-refresh.
+Assigned roles share case visibility. Custody transfers are authorized by the current holder. On-chain records remain publicly readable independently of the application's roles.
 
-Transaksi juga masih tiruan. Popup MetaMask, nomor blok, dan hash tx dibuat di `src/lib/chain.js` dan `src/store/AppStore.jsx`. Kalau kontrak `EvidenceRegistry` sudah deploy di Sepolia, yang perlu diganti:
+## Storage
 
-1. `requestTx` di `AppStore.jsx` diganti pemanggilan kontrak lewat ethers.js
-2. alamat kontrak di `CONTRACT` (`src/lib/chain.js`)
-3. data awal diambil dari event kontrak, bukan dari `seed.js`
+| Component | Stores or enforces |
+| --- | --- |
+| `RoleRegistry` | Wallet roles, role versions, and protection of the last Admin |
+| `CaseRegistry` | Case lifecycle, metadata commitments, and evidence counts |
+| `EvidenceRegistry` | Evidence hashes, holders, status, and custody actions |
+| `CustodyLedger` | Append-only custody history inherited by `EvidenceRegistry` |
+| PostgreSQL | Profiles, case descriptions, and file metadata |
+| `server/private-files/` | Original evidence files, up to 25 MB each |
 
-## Struktur
+Case changes require an on-chain transaction before the matching description is saved. File uploads follow evidence registration and can be retried from the evidence detail screen. Role changes invalidate existing sessions.
 
-```
-src/
-  components/   bagian visual yang dipakai ulang (map, label bukti, kertas sambung, papan klip, dll)
-  pages/        satu file per halaman, admin di pages/admin
-  store/        state aplikasi dan aksi
-  data/         data contoh
-  lib/          format tanggal, hash, helper
-  styles/       warna, font, komponen dasar
+Build the frontend with `npm run build`. Startup applies `server/schema.sql` to upgrade existing databases.
+
+## Deployment
+
+For Sepolia, set `SEPOLIA_RPC_URL` and `DEPLOYER_KEY` in `.env`, then run:
+
+```powershell
+npx hardhat run scripts/deploy.cjs --network sepolia
 ```
 
-## Build
+The deploying wallet becomes Admin. Configure the printed RoleRegistry and EvidenceRegistry addresses, RPC URLs, and chain ID using `.env.example`. EvidenceRegistry creates its CaseRegistry automatically. Keep `.env`, private keys, and uploaded files out of Git.
 
-```bash
-npm run build
-```
+For public hosting, set `NODE_ENV=production` and use HTTPS with a same-site frontend/API. Sessions currently use one API process; restarting it logs users out. Use a shared atomic session store before adding workers. Local services bind to loopback by default.
 
-Hasilnya di folder `dist`. Karena pakai BrowserRouter, hosting perlu diarahkan semua path ke `index.html` (di Vercel atau Netlify ini otomatis untuk project Vite, kalau tidak tambahkan rewrite).
+For an empty local v1 instance, `npm run upgrade:local` deploys v2 and preserves role assignments. Existing evidence or case/file records require a migration plan. The command archives the previous configuration under `.local/deployments` and leaves an existing v2 deployment unchanged.

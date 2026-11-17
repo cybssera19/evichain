@@ -1,6 +1,6 @@
-const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des']
-const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu']
-const fullMonths = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+const fullMonths = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
 const pad = (n) => String(n).padStart(2, '0')
 
@@ -27,7 +27,7 @@ export function formatToday(d = new Date()) {
   return `${days[d.getDay()]}, ${d.getDate()} ${fullMonths[d.getMonth()]} ${d.getFullYear()}`
 }
 
-export const formatBlock = (n) => n.toLocaleString('id-ID')
+export const formatBlock = (n) => n.toLocaleString('en-US')
 
 export function formatSize(bytes) {
   if (!bytes) return '0 B'
@@ -38,7 +38,7 @@ export function formatSize(bytes) {
     v /= 1024
     i++
   }
-  return `${v.toLocaleString('id-ID', { maximumFractionDigits: 1 })} ${units[i]}`
+  return `${v.toLocaleString('en-US', { maximumFractionDigits: 1 })} ${units[i]}`
 }
 
 export const shortAddr = (a) => (a ? `${a.slice(0, 6)}…${a.slice(-4)}` : '')
@@ -57,7 +57,7 @@ export const initials = (name) =>
 
 export const STATUS = {
   Collected: { label: 'Collected', color: 'var(--blue)' },
-  InAnalysis: { label: 'Dalam analisis', color: 'var(--amber)' },
+  InAnalysis: { label: 'In analysis', color: 'var(--amber)' },
   Stored: { label: 'Stored', color: 'var(--green)' },
   Released: { label: 'Released', color: 'var(--desk)' },
   Disposed: { label: 'Disposed', color: 'var(--ink-soft)' },
@@ -68,13 +68,13 @@ export const FINAL_STATUS = ['Released', 'Disposed', 'Voided']
 
 export const ROLE_COLOR = {
   Admin: 'var(--red)',
-  Penyidik: 'var(--blue)',
-  Analis: 'var(--amber)',
+  Investigator: 'var(--blue)',
+  Analyst: 'var(--amber)',
   Auditor: 'var(--green)',
 }
 
 export const CASE_COLOR = {
-  Penyidikan: 'var(--blue)',
-  Pemberkasan: 'var(--amber)',
-  Selesai: 'var(--green)',
+  Investigation: 'var(--blue)',
+  Filing: 'var(--amber)',
+  Closed: 'var(--green)',
 }

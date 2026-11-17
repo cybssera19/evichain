@@ -1,7 +1,6 @@
 import { ChevronRight } from './Icons'
 import './ledger.css'
 
-// lembar buku register: kertas bergaris, margin merah, lubang binder
 export default function Ledger({ columns, rows, rowKey, onRowClick, highlight, footer, compact }) {
   const template = columns.map((c) => c.width ?? '1fr').join(' ') + (onRowClick ? ' 24px' : '')
 
@@ -42,7 +41,7 @@ export default function Ledger({ columns, rows, rowKey, onRowClick, highlight, f
             </div>
           )
         })}
-        {!rows.length && <p className="ledger-empty">Tidak ada data yang cocok.</p>}
+        {!rows.length && <p className="ledger-empty">No matching records.</p>}
         {footer && <div className="ledger-foot">{footer}</div>}
       </div>
     </div>
@@ -53,7 +52,7 @@ export function Pager({ page, pages, onChange }) {
   return (
     <div className="pager">
       <button disabled={page <= 1} onClick={() => onChange(page - 1)}>
-        Sebelumnya
+        Previous
       </button>
       {Array.from({ length: pages }, (_, i) => (
         <button key={i} className={page === i + 1 ? 'on' : ''} onClick={() => onChange(i + 1)}>
@@ -61,7 +60,7 @@ export function Pager({ page, pages, onChange }) {
         </button>
       ))}
       <button disabled={page >= pages} onClick={() => onChange(page + 1)}>
-        Berikutnya
+        Next
       </button>
     </div>
   )
