@@ -253,8 +253,8 @@ export default function App() {
     {error && <div className="error">{error}</div>}{notice && <div className="notice">{notice}</div>}
     <div className="head"><div><Today/><p className="eyebrow">EviChain · {me.role}</p><h1>{screen}</h1></div>{me.role === 'Investigator' && ['Dashboard','Evidence'].includes(screen) && <button onClick={() => setScreen('Register')}>+ Register evidence</button>}</div>
     {screen === 'Dashboard' && <>
-      <div className="section-title"><h2>Active cases</h2><span className="count">{cases.filter((c) => c.status !== 'Closed').length} cases</span></div>
-      <div className="drawer live-drawer">{cases.filter((c) => c.status !== 'Closed').slice(0, 3).map((c) => <LiveFolder key={c.no} kase={c} items={evidence.filter((e) => e.caseId === c.no)} onOpen={() => setScreen('Cases')} />)}{!cases.some((c) => c.status !== 'Closed') && <p className="empty-desk">No active cases.</p>}</div>
+      <div className="section-title"><h2>Active cases<span className="count">{cases.filter((c) => c.status !== 'Closed').length} cases</span></h2><button className="section-link" onClick={() => setScreen('Cases')}>View all</button></div>
+      <div className="drawer live-drawer">{cases.filter((c) => c.status !== 'Closed').map((c) => <LiveFolder key={c.no} kase={c} items={evidence.filter((e) => e.caseId === c.no)} onOpen={() => setScreen('Cases')} />)}{!cases.some((c) => c.status !== 'Closed') && <p className="empty-desk">No active cases.</p>}</div>
       <div className="section-title live-section"><h2>Recent evidence</h2><button className="section-link" onClick={() => setScreen('Evidence')}>View all</button></div>
       <LiveRecent items={evidence.slice(0, 4)} onOpen={(id) => { setSelected(id); setScreen('Evidence details') }} />
     </>}

@@ -119,11 +119,15 @@ p {
 }
 
 .desk {
-  min-height: 100vh;
-  padding: 24px 32px 64px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 20px 32px 0;
 }
 
 .page {
+  width: 100%;
   max-width: 1376px;
   margin: 0 auto;
 }
@@ -551,7 +555,7 @@ select.input {
 
 @media (max-width: 900px) {
   .desk {
-    padding: 16px 16px 48px;
+    padding: 16px 16px 0;
   }
 
   .page-head {
