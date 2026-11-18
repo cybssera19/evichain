@@ -4,7 +4,7 @@ A wallet-based application for tracking digital evidence and chain of custody.
 
 ## Run locally
 
-Works on Linux, macOS, Windows, and WSL. Requires Node.js 22.12 or newer, npm, Docker with Docker Compose, and MetaMask. Start the Docker engine before launching the application. On WSL, enable Docker Desktop integration for your distribution, or use a Docker Engine installed inside WSL. PowerShell is not required.
+Works on Linux, macOS, Windows, and WSL. Requires Node.js 22.12 or newer, npm, Docker with Docker Compose, and MetaMask.
 
 ```sh
 npm ci
