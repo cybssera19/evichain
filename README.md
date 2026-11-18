@@ -21,6 +21,28 @@ Open **http://127.0.0.1:5173**. Startup launches PostgreSQL, Hardhat, the API, a
 
 For the local Admin account, run `npm run admin:local`. Import the displayed development key into MetaMask and sign in. This publicly known account is for local development only. Never use it for real funds or public deployments.
 
+## Run on Sepolia
+
+To run against the public testnet instead of the local chain:
+
+1. Get a Sepolia RPC URL (e.g. Alchemy) and a funded test wallet. Set `SEPOLIA_RPC_URL` and `DEPLOYER_KEY` in `.env`, then deploy:
+
+```powershell
+npx hardhat run scripts/deploy.cjs --network sepolia
+```
+
+2. In `.env`, set `CHAIN_ID=11155111`, point `RPC_URL`/`VITE_RPC_URL` at a Sepolia endpoint, and fill `CONTRACT_ADDRESS`/`ROLE_CONTRACT_ADDRESS` and their `VITE_` counterparts with the printed addresses. Use a public RPC for `VITE_RPC_URL` so the provider key stays out of the browser bundle.
+
+3. Start the services manually — not `start:local`, which targets the local chain:
+
+```powershell
+docker compose up -d postgres
+npm run api
+npm run dev
+```
+
+4. In MetaMask, select the **Sepolia** network and sign in. Each acting wallet needs Sepolia test ETH from a faucet, and transactions take a few seconds to confirm.
+
 ## Roles and workflow
 
 | Role | Access |
