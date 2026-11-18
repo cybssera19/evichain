@@ -23,28 +23,6 @@ The Node.js launcher reuses services that are already running and leaves newly s
 
 For the local Admin account, run `npm run admin:local`. Import the displayed development key into MetaMask and sign in. This publicly known account is for local development only. Never use it for real funds or public deployments.
 
-## Run on Sepolia
-
-To run against the public testnet instead of the local chain:
-
-1. Get a Sepolia RPC URL (e.g. Alchemy) and a funded test wallet. Set `SEPOLIA_RPC_URL` and `DEPLOYER_KEY` in `.env`, then deploy:
-
-```powershell
-npx hardhat run scripts/deploy.cjs --network sepolia
-```
-
-2. In `.env`, set `CHAIN_ID=11155111`, point `RPC_URL`/`VITE_RPC_URL` at a Sepolia endpoint, and fill `CONTRACT_ADDRESS`/`ROLE_CONTRACT_ADDRESS` and their `VITE_` counterparts with the printed addresses. Use a public RPC for `VITE_RPC_URL` so the provider key stays out of the browser bundle.
-
-3. Start the services manually — not `start:local`, which targets the local chain:
-
-```powershell
-docker compose up -d postgres
-npm run api
-npm run dev
-```
-
-4. In MetaMask, select the **Sepolia** network and sign in. Each acting wallet needs Sepolia test ETH from a faucet, and transactions take a few seconds to confirm.
-
 ## Roles and workflow
 
 | Role | Access |
@@ -81,7 +59,20 @@ For Sepolia, set `SEPOLIA_RPC_URL` and `DEPLOYER_KEY` in `.env`, then run:
 npx hardhat run scripts/deploy.cjs --network sepolia
 ```
 
-The deploying wallet becomes Admin. Configure the printed RoleRegistry and EvidenceRegistry addresses, RPC URLs, and chain ID using `.env.example`. EvidenceRegistry creates its CaseRegistry automatically. Keep `.env`, private keys, and uploaded files out of Git.
+The deploying wallet becomes Admin. Configure the printed RoleRegistry and EvidenceRegistry addresses, RPC URLs, and chain ID using `.env.example`. Point `VITE_RPC_URL` at a public endpoint so the provider key stays out of the browser bundle. EvidenceRegistry creates its CaseRegistry automatically. Keep `.env`, private keys, and uploaded files out of Git.
+
+To require multiple approvals for admin actions, make a **Safe** multisig the Admin:
+
+1. At [app.safe.global](https://app.safe.global), create a Safe on the same network with the owner wallets and a threshold (e.g. 2 of 3).
+2. Transfer the Admin role to it — this grants the Safe the Admin role and removes the deploying wallet:
+
+```sh
+SAFE=0xYourSafe OLD_ADMIN=0xDeployerWallet npx hardhat run scripts/transfer-admin.cjs --network sepolia
+```
+
+3. Perform admin actions through the Safe: **Apps → Transaction Builder**, call the registry method (e.g. `setRole` to assign a role), then the required owners sign and execute.
+
+Afterwards every admin action — roles, cases, voiding, and recovery — needs the Safe's signer threshold instead of a single key.
 
 For public hosting, set `NODE_ENV=production` and use HTTPS with a same-site frontend/API. Sessions currently use one API process; restarting it logs users out. Use a shared atomic session store before adding workers. Local services bind to loopback by default.
 
