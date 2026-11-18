@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "start:local": "powershell -ExecutionPolicy Bypass -File scripts/start-local.ps1",
+    "start:local": "node scripts/start-local.mjs",
     "admin:local": "node scripts/admin-local.mjs",
     "chain": "hardhat node --hostname 127.0.0.1",
     "compile:contract": "hardhat compile",
