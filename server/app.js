@@ -9,7 +9,6 @@ import { fileHandlers } from './files.js'
 import { caseHandlers } from './cases.js'
 import { uploadGuard } from './upload-guard.js'
 import path from 'node:path'
-import { existsSync } from 'node:fs'
 import multer from 'multer'
 import { ethers } from 'ethers'
 
@@ -147,13 +146,6 @@ export function createApp({
   )
   app.get('/api/evidence/files', auth, assigned, wrap(files.list))
   app.use('/api', (_req, res) => fail(res, 404, 'NOT_FOUND'))
-  // Serve the built frontend from the same origin as the API (for public hosting via a tunnel).
-  // No-op in dev (no dist/ yet); build with `npm run build`.
-  const distDir = path.resolve('dist')
-  if (existsSync(distDir)) {
-    app.use(express.static(distDir))
-    app.get(/.*/, (_req, res) => res.sendFile(path.join(distDir, 'index.html')))
-  }
   app.use((error, _req, res, _next) => {
     if (error.code === 'LIMIT_FILE_SIZE') return fail(res, 413, 'FILE_TOO_LARGE')
     if (error instanceof multer.MulterError) return fail(res, 400, 'INVALID_REQUEST')
