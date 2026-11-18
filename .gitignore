@@ -4,3 +4,4 @@ node_modules/
 server/private-files/
 artifacts/
 cache/
+dist/
