@@ -29,7 +29,7 @@
 
 .folder-back {
   position: absolute;
-  inset: 24px 0 0;
+  inset: 24px 8px 0;
   border-radius: 6px 16px 16px 16px;
   background: linear-gradient(#dcb062, #c9963f);
   box-shadow: 0 6px 14px rgba(31, 20, 0, 0.25);
@@ -38,8 +38,8 @@
 .folder-paper {
   position: absolute;
   top: 44px;
-  left: 30px;
-  right: 26px;
+  left: 36px;
+  right: 32px;
   height: 200px;
   border-radius: 3px;
   background: #f4f1e8;
@@ -49,8 +49,8 @@
 
 .folder-paper.two {
   top: 52px;
-  left: 34px;
-  right: 30px;
+  left: 40px;
+  right: 36px;
   background: #faf8f2;
   transform: rotate(0.8deg);
 }
@@ -84,7 +84,7 @@
 .folder-empty {
   position: absolute;
   top: 82px;
-  left: 44px;
+  left: 50px;
   padding: 8px 12px;
   border: 1.2px dashed #c9bfa3;
   border-radius: 8px;
@@ -95,8 +95,8 @@
 
 .folder-front {
   position: absolute;
-  left: 0;
-  right: 0;
+  left: 8px;
+  right: 8px;
   bottom: 0;
   height: 150px;
   padding: 20px 22px 18px;

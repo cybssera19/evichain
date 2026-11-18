@@ -6,8 +6,16 @@
   position: absolute;
   width: 70px;
   height: 112px;
-  transform: rotate(var(--tilt));
+  transform: scale(1.2) rotate(var(--tilt));
+  transform-origin: top left;
   transition: transform 0.2s ease;
+}
+
+button.mini-tag {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
 }
 
 .mini-tag:hover {

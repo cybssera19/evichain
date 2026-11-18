@@ -406,6 +406,16 @@ select.input {
   white-space: nowrap;
 }
 
+.stamp.stamp-void {
+  background: var(--void);
+  color: #fff;
+  border-color: transparent;
+  text-decoration: line-through;
+  text-decoration-color: rgba(255, 255, 255, 0.55);
+  transform: rotate(-3deg);
+  opacity: 0.9;
+}
+
 .chip-row {
   display: flex;
   gap: 6px;

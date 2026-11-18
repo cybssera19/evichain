@@ -1,5 +1,5 @@
 import { CaseSticker, StatusStamp } from './Status'
-import { Barcode, RowTag } from './Tags'
+import { MiniTag, RowTag } from './Tags'
 import { TapeH } from './Tape'
 import { formatToday } from '../lib/format'
 import './folder.css'
@@ -11,12 +11,13 @@ export function LiveFolder({ kase, items, onOpen }) {
     <div className="folder-back" />
     <div className="folder-paper one" />
     <div className="folder-paper two"><i /><i /><i /></div>
-    {items.length ? items.slice(0, 4).map((item, i) => <div className="folder-slot live-slot" key={item.id} style={{ left: 40 + i * 84, top: 50 + (i % 2) * 8, transform: `rotate(${[3, -2.5, 2, -1.5][i]}deg)` }}>
-      <div className="live-tag-band" style={{ background: `var(--${item.status === 'InAnalysis' ? 'amber' : item.status === 'Collected' ? 'blue' : item.status === 'Stored' ? 'green' : 'void'})` }} />
-      <span className="mono">#{String(item.id).padStart(3, '0')}</span>
-      <b>{item.kind}</b>
-      <Barcode seed={item.id} width={43} height={10} />
-    </div>) : <span className="folder-empty">No evidence yet</span>}
+    {items.length ? items.slice(0, 4).map((item, i) => <MiniTag
+      key={item.id}
+      item={item}
+      tilt={[3, -2.5, 2, -1.5][i]}
+      style={{ left: 36 + i * 58, top: 45 + (i % 2) * 14 }}
+      onClick={() => onOpen?.(item.id)}
+    />) : <span className="folder-empty">No evidence yet</span>}
     <Front type={onOpen ? 'button' : undefined} className="folder-front" onClick={onOpen ? () => onOpen(kase.no) : undefined}>
       <div><CaseSticker status={kase.status} /><h3>{kase.title}</h3></div>
       <div className="folder-foot"><span>{items.length} evidence {items.length === 1 ? 'item' : 'items'}</span>{onOpen && <span className="light">View cases →</span>}</div>

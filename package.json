@@ -16,6 +16,7 @@
     "api": "node server/index.js"
   },
   "dependencies": {
+    "@babel/code-frame": "^8.0.6",
     "@fontsource/bricolage-grotesque": "^5.3.0",
     "@fontsource/dm-mono": "^5.3.0",
     "@fontsource/figtree": "^5.3.0",

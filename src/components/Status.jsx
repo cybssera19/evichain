@@ -2,9 +2,10 @@ import { CASE_COLOR, ROLE_COLOR, STATUS } from '../lib/format'
 
 export function StatusStamp({ status, size }) {
   const s = STATUS[status]
+  const isVoided = status === 'Voided'
   const color = status === 'InAnalysis' ? 'var(--amber-ink)' : s.color
   return (
-    <span className={`stamp ${size === 'lg' ? 'stamp-lg' : ''}`} style={{ color }}>
+    <span className={`stamp${size === 'lg' ? ' stamp-lg' : ''}${isVoided ? ' stamp-void' : ''}`} style={isVoided ? {} : { color }}>
       {s.label}
     </span>
   )

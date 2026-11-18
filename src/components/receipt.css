@@ -1,0 +1,30 @@
+.receipt-screen { display: flex; flex-direction: column; align-items: center; gap: 24px; padding: 8px 0 40px; }
+.receipt { position: relative; width: min(460px, 100%); filter: drop-shadow(0 18px 32px rgba(26, 15, 0, 0.35)); }
+.receipt-body {
+  background: linear-gradient(180deg, #fffdf7, #f6f0e2);
+  padding: 34px 36px 30px;
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+}
+.receipt-notch { height: 12px; background-size: 20px 20px; background-repeat: repeat-x; }
+.receipt-notch-top { background-image: radial-gradient(circle at 10px 14px, transparent 9px, #fffdf7 9px); }
+.receipt-notch-bottom { background-image: radial-gradient(circle at 10px -2px, transparent 9px, #f6f0e2 9px); }
+
+.receipt-check {
+  width: 44px; height: 44px; border-radius: 50%; margin-bottom: 14px;
+  background: var(--green, #1f7a4d); color: #fff;
+  display: inline-grid; place-items: center;
+}
+.receipt h2 { margin: 0 0 6px; font-family: var(--font-display); font-size: 21px; color: #1d1a14; }
+.receipt-sub { font-size: 13px; line-height: 1.55; margin: 0 0 20px; max-width: 320px; }
+.receipt-id { font-size: 40px; letter-spacing: -0.04em; color: #1d1a14; line-height: 1; }
+.receipt-kind { font-family: var(--font-display); font-size: 18px; font-weight: 600; color: #1d1a14; margin-top: 4px; }
+.receipt-rule { align-self: stretch; height: 1px; margin: 22px 0; background: repeating-linear-gradient(90deg, #cdc3a9 0 6px, transparent 6px 12px); }
+.receipt-rows { align-self: stretch; margin: 0; display: flex; flex-direction: column; gap: 11px; }
+.receipt-rows > div { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 14px; text-align: left; align-items: baseline; }
+.receipt-rows dt { font-size: 12px; color: #6b6455; }
+.receipt-rows dd { margin: 0; font-size: 13px; color: #1d1a14; font-weight: 500; }
+.receipt-wrap { overflow-wrap: anywhere; font-size: 11.5px !important; line-height: 1.5; }
+.receipt-barcode { margin-top: 4px; }
+.receipt-foot { font-size: 10.5px; color: #6b6455; letter-spacing: 0.06em; margin: 10px 0 0; }
+
+.receipt-actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
