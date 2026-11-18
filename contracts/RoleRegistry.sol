@@ -8,7 +8,12 @@ contract RoleRegistry {
     mapping(address => uint256) public roleVersion;
     uint256 public adminCount;
 
-    event RoleChanged(address indexed wallet, EvidenceTypes.Role previousRole, EvidenceTypes.Role newRole, address indexed actor);
+    event RoleChanged(
+        address indexed wallet,
+        EvidenceTypes.Role previousRole,
+        EvidenceTypes.Role newRole,
+        address indexed actor
+    );
 
     constructor() {
         roles[msg.sender] = EvidenceTypes.Role.Admin;
@@ -29,7 +34,9 @@ contract RoleRegistry {
             require(adminCount > 1, "last admin");
             adminCount -= 1;
         }
-        if (role == EvidenceTypes.Role.Admin) adminCount += 1;
+
+        if (role == EvidenceTypes.Role.Admin)
+            adminCount += 1;
         roles[wallet] = role;
         roleVersion[wallet]++;
         emit RoleChanged(wallet, previous, role, msg.sender);

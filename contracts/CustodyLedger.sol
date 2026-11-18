@@ -12,11 +12,25 @@ abstract contract CustodyLedger {
         return _history[id];
     }
 
-    function historyLength(uint256 id) external view returns (uint256) { return _history[id].length; }
-    function historyAt(uint256 id, uint256 index) external view returns (EvidenceTypes.CustodyRecord memory) { return _history[id][index]; }
+    function historyLength(uint256 id) external view returns (uint256) {
+        return _history[id].length;
+    }
 
-    function _record(uint256 id, address from, address to, string memory action, string memory note, bytes32 reportHash) internal {
-        _history[id].push(EvidenceTypes.CustodyRecord(msg.sender, from, to, action, note, reportHash, block.timestamp));
+    function historyAt(uint256 id, uint256 index) external view returns (EvidenceTypes.CustodyRecord memory) {
+        return _history[id][index];
+    }
+
+    function _record(
+        uint256 id,
+        address from,
+        address to,
+        string memory action,
+        string memory note,
+        bytes32 reportHash
+    ) internal {
+        _history[id].push(
+            EvidenceTypes.CustodyRecord(msg.sender, from, to, action, note, reportHash, block.timestamp)
+        );
         emit EvidenceChanged(id, action, msg.sender);
     }
 }
