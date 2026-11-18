@@ -4,14 +4,16 @@ A wallet-based application for tracking digital evidence and chain of custody.
 
 ## Run locally
 
-Requires Node.js 22, Docker Desktop, PowerShell, and MetaMask.
+Works on Linux, macOS, Windows, and WSL. Requires Node.js 22.12 or newer, npm, Docker with Docker Compose, and MetaMask.
 
-```powershell
+```sh
 npm ci
 npm run start:local
 ```
 
-Open **http://127.0.0.1:5173**. Startup launches PostgreSQL, Hardhat, the API, and the frontend. It deploys contracts and creates `.env` when needed.
+Open **http://127.0.0.1:5173**. Startup launches PostgreSQL, Hardhat, the API, and the frontend. It deploys contracts and creates `.env` when needed. It also checks frontend compilation (output in `.local/frontend-check/`) before reporting that the application is ready.
+
+The Node.js launcher reuses services that are already running and leaves newly started services running in the background. Their logs are in `.local/chain.*.log`, `.local/api.*.log`, and `.local/web.*.log`. If startup reports that Docker is inaccessible, check `docker info` and `docker compose version` in the same terminal.
 
 ## Sign in
 
@@ -75,7 +77,7 @@ Build the frontend with `npm run build`. Startup applies `server/schema.sql` to 
 
 For Sepolia, set `SEPOLIA_RPC_URL` and `DEPLOYER_KEY` in `.env`, then run:
 
-```powershell
+```sh
 npx hardhat run scripts/deploy.cjs --network sepolia
 ```
 

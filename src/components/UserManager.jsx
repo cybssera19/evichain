@@ -3,7 +3,10 @@ import { initials, shortAddr } from '../lib/format'
 import './usermanager.css'
 
 const ROLE_HEX = {
-  Admin: '#e8452c', Investigator: '#2d5be3', Analyst: '#e8a317', Auditor: '#1f9d63',
+  Admin: '#e8452c',
+  Investigator: '#2d5be3',
+  Analyst: '#e8a317',
+  Auditor: '#1f9d63',
 }
 const ROLE_ORDER = ['Admin', 'Investigator', 'Analyst', 'Auditor']
 
@@ -18,7 +21,12 @@ function Board({ title, onClose, children }) {
             <h2>{title}</h2>
             <button className="um-close" onClick={onClose} aria-label="Tutup">
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                <path
+                  d="M1 1l10 10M11 1L1 11"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                />
               </svg>
             </button>
           </div>
@@ -34,28 +42,52 @@ function UserForm({ user, onSubmit, onClose, busy }) {
   const edit = !!user
   return (
     <Board title={edit ? 'Edit user' : 'Add user'} onClose={onClose}>
-      <form className="um-form" onSubmit={(e) => { e.preventDefault(); onSubmit(new FormData(e.currentTarget), edit) }}>
+      <form
+        className="um-form"
+        onSubmit={(e) => {
+          e.preventDefault()
+          onSubmit(new FormData(e.currentTarget), edit)
+        }}
+      >
         <div className="um-row">
           <label className="um-field">
-            <span className="um-label">Full name <i>*</i></span>
+            <span className="um-label">
+              Full name <i>*</i>
+            </span>
             <input name="name" required defaultValue={user?.name || ''} placeholder="Full name" />
           </label>
           <label className="um-field">
-            <span className="um-label">On-chain role <i>*</i></span>
+            <span className="um-label">
+              On-chain role <i>*</i>
+            </span>
             <span className="um-select">
               <select name="role" required defaultValue={user?.role || ''}>
-                <option value="" disabled>Select a role</option>
-                {ROLE_ORDER.map((r) => <option key={r} value={r}>{r}</option>)}
+                <option value="" disabled>
+                  Select a role
+                </option>
+                {ROLE_ORDER.map((r) => (
+                  <option key={r} value={r}>
+                    {r}
+                  </option>
+                ))}
               </select>
               <svg className="um-caret" width="10" height="6" viewBox="0 0 10 6" fill="none">
-                <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                <path
+                  d="M1 1l4 4 4-4"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </span>
           </label>
         </div>
 
         <label className="um-field">
-          <span className="um-label">Wallet address <i>*</i></span>
+          <span className="um-label">
+            Wallet address <i>*</i>
+          </span>
           <span className="um-input-lock">
             <input
               name="wallet"
@@ -68,8 +100,20 @@ function UserForm({ user, onSubmit, onClose, busy }) {
             />
             {edit && (
               <svg className="um-lock" width="12" height="13" viewBox="0 0 12 13" fill="none">
-                <rect x="1.5" y="5.5" width="9" height="6.5" rx="1.5" stroke="currentColor" strokeWidth="1.3" />
-                <path d="M3.75 5.5V3.75a2.25 2.25 0 014.5 0V5.5" stroke="currentColor" strokeWidth="1.3" />
+                <rect
+                  x="1.5"
+                  y="5.5"
+                  width="9"
+                  height="6.5"
+                  rx="1.5"
+                  stroke="currentColor"
+                  strokeWidth="1.3"
+                />
+                <path
+                  d="M3.75 5.5V3.75a2.25 2.25 0 014.5 0V5.5"
+                  stroke="currentColor"
+                  strokeWidth="1.3"
+                />
               </svg>
             )}
           </span>
@@ -87,8 +131,16 @@ function UserForm({ user, onSubmit, onClose, busy }) {
         </div>
 
         <label className="um-field">
-          <span className="um-label">Email <i>*</i></span>
-          <input name="email" type="email" required defaultValue={user?.email || ''} placeholder="name@evichain.id" />
+          <span className="um-label">
+            Email <i>*</i>
+          </span>
+          <input
+            name="email"
+            type="email"
+            required
+            defaultValue={user?.email || ''}
+            placeholder="name@evichain.id"
+          />
         </label>
 
         <p className={edit ? 'um-note um-note-warn' : 'um-note um-note-info'}>
@@ -98,7 +150,9 @@ function UserForm({ user, onSubmit, onClose, busy }) {
         </p>
 
         <div className="um-actions">
-          <button type="button" className="um-ghost" onClick={onClose}>Cancel</button>
+          <button type="button" className="um-ghost" onClick={onClose}>
+            Cancel
+          </button>
           <button type="submit" className="um-primary" disabled={busy}>
             {edit ? 'Save' : 'Save and grantRole'}
           </button>
@@ -114,7 +168,9 @@ function DeleteConfirm({ user, onConfirm, onClose, busy }) {
   return (
     <Board title="Delete user" onClose={onClose}>
       <div className="um-mini">
-        <div className="um-mini-band" style={{ background: hex }}>{user.role}</div>
+        <div className="um-mini-band" style={{ background: hex }}>
+          {user.role}
+        </div>
         <div className="um-mini-body">
           <span className="um-mini-avatar">{initials(user.name || 'U')}</span>
           <div className="um-mini-text">
@@ -127,15 +183,21 @@ function DeleteConfirm({ user, onConfirm, onClose, busy }) {
       </div>
 
       <p className="um-delete-copy">
-        The {user.role} role for <b>{user.name}</b> is revoked on-chain via revokeRole and the profile is deleted from the database.
+        The {user.role} role for <b>{user.name}</b> is revoked on-chain via revokeRole and the
+        profile is deleted from the database.
       </p>
       <p className="um-note um-note-danger">
-        {user.name?.split(' ')[0]}&rsquo;s activity history on the blockchain is permanent and is not deleted.
+        {user.name?.split(' ')[0]}&rsquo;s activity history on the blockchain is permanent and is
+        not deleted.
       </p>
 
       <div className="um-actions">
-        <button type="button" className="um-ghost" onClick={onClose}>Cancel</button>
-        <button className="um-danger" disabled={busy} onClick={onConfirm}>Revoke role and delete</button>
+        <button type="button" className="um-ghost" onClick={onClose}>
+          Cancel
+        </button>
+        <button className="um-danger" disabled={busy} onClick={onConfirm}>
+          Revoke role and delete
+        </button>
       </div>
     </Board>
   )
@@ -153,7 +215,9 @@ export default function UserManager({ users, me, busy, onAdd, onEdit, onDelete, 
 
   const counts = useMemo(() => {
     const c = {}
-    people.forEach((u) => { c[u.role] = (c[u.role] || 0) + 1 })
+    people.forEach((u) => {
+      c[u.role] = (c[u.role] || 0) + 1
+    })
     return c
   }, [people])
 
@@ -186,14 +250,21 @@ export default function UserManager({ users, me, busy, onAdd, onEdit, onDelete, 
     <div className="um">
       <header className="um-head">
         <h1>Users</h1>
-        <button className="um-add" onClick={() => setAdding(true)}>Add user</button>
+        <button className="um-add" onClick={() => setAdding(true)}>
+          Add user
+        </button>
       </header>
 
       <div className="um-toolbar">
         <span className="um-search">
           <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
             <circle cx="6" cy="6" r="4.4" stroke="currentColor" strokeWidth="1.5" />
-            <path d="M9.6 9.6L12.2 12.2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            <path
+              d="M9.6 9.6L12.2 12.2"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
           </svg>
           <input
             placeholder="Search name, unit, or wallet"
@@ -247,17 +318,34 @@ export default function UserManager({ users, me, busy, onAdd, onEdit, onDelete, 
 
                 <div className="um-foot">
                   <span className="um-wallet um-mono">{shortAddr(u.wallet)}</span>
-                  <span className="um-held">{n} {n === 1 ? 'item' : 'items'} held</span>
+                  <span className="um-held">
+                    {n} {n === 1 ? 'item' : 'items'} held
+                  </span>
                   <span className="um-tools">
                     <button className="um-icon" title="Edit" onClick={() => setEditing(u)}>
                       <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
-                        <path d="M11.3 2.2l2.5 2.5-8.4 8.4-3.1.6.6-3.1 8.4-8.4z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
+                        <path
+                          d="M11.3 2.2l2.5 2.5-8.4 8.4-3.1.6.6-3.1 8.4-8.4z"
+                          stroke="currentColor"
+                          strokeWidth="1.3"
+                          strokeLinejoin="round"
+                        />
                       </svg>
                     </button>
                     {!self && (
-                      <button className="um-icon um-icon-del" title="Delete" onClick={() => setRemoving(u)}>
+                      <button
+                        className="um-icon um-icon-del"
+                        title="Delete"
+                        onClick={() => setRemoving(u)}
+                      >
                         <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
-                          <path d="M2.8 4.2h10.4M6.4 4.2V2.6h3.2v1.6M4.3 4.2l.6 9h6.2l.6-9" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+                          <path
+                            d="M2.8 4.2h10.4M6.4 4.2V2.6h3.2v1.6M4.3 4.2l.6 9h6.2l.6-9"
+                            stroke="currentColor"
+                            strokeWidth="1.3"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
                         </svg>
                       </button>
                     )}
@@ -271,8 +359,12 @@ export default function UserManager({ users, me, busy, onAdd, onEdit, onDelete, 
         {!shown.length && <p className="um-empty">No users match.</p>}
       </div>
 
-      {adding && <UserForm user={null} onSubmit={submit} onClose={() => setAdding(false)} busy={busy} />}
-      {editing && <UserForm user={editing} onSubmit={submit} onClose={() => setEditing(null)} busy={busy} />}
+      {adding && (
+        <UserForm user={null} onSubmit={submit} onClose={() => setAdding(false)} busy={busy} />
+      )}
+      {editing && (
+        <UserForm user={editing} onSubmit={submit} onClose={() => setEditing(null)} busy={busy} />
+      )}
       {removing && (
         <DeleteConfirm
           user={removing}

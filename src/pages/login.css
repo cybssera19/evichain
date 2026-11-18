@@ -269,8 +269,7 @@
   line-height: 20px;
   white-space: pre-wrap;
   word-break: break-all;
-  background:
-    radial-gradient(circle, #e9dfc6 3.6px, transparent 4px) 9px 10px / 8px 24px repeat-y,
+  background: radial-gradient(circle, #e9dfc6 3.6px, transparent 4px) 9px 10px / 8px 24px repeat-y,
     radial-gradient(circle, #e9dfc6 3.6px, transparent 4px) calc(100% - 9px) 10px / 8px 24px repeat-y,
     linear-gradient(90deg, transparent 26px, rgba(238, 244, 232, 0.55) 26px calc(100% - 26px), transparent 0),
     #fffdf6;

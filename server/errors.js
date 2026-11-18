@@ -22,17 +22,27 @@ const messages = {
   FILE_CONFLICT: 'This evidence file is already registered and cannot be replaced.',
   EVIDENCE_FINAL: 'This evidence is final. New uploads are not allowed.',
   UPLOAD_BUSY: 'Other uploads are in progress. Please try again shortly.',
-  CASE_CHAIN_MISMATCH: 'Case data does not match the blockchain. Confirm the case transaction, then save again.',
-  CASE_DELETE_ONCHAIN: 'Delete the case on-chain first. Cases with registered evidence cannot be deleted.',
+  CASE_CHAIN_MISMATCH:
+    'Case data does not match the blockchain. Confirm the case transaction, then save again.',
+  CASE_DELETE_ONCHAIN:
+    'Delete the case on-chain first. Cases with registered evidence cannot be deleted.',
 }
 const legacy = {
-  'Please sign in': 'AUTH_REQUIRED', 'Insufficient role': 'FORBIDDEN', 'Awaiting role approval': 'ROLE_PENDING',
-  'Revoke role on-chain first': 'ROLE_REVOKE_FIRST', 'Case has evidence': 'CASE_HAS_EVIDENCE',
+  'Please sign in': 'AUTH_REQUIRED',
+  'Insufficient role': 'FORBIDDEN',
+  'Awaiting role approval': 'ROLE_PENDING',
+  'Revoke role on-chain first': 'ROLE_REVOKE_FIRST',
+  'Case has evidence': 'CASE_HAS_EVIDENCE',
   'Evidence creator or hash mismatch': 'FILE_MISMATCH',
-  'Invalid profile': 'INVALID_PROFILE', 'Choose a valid role': 'INVALID_ROLE',
-  'Name required': 'NAME_REQUIRED', 'Invalid case': 'INVALID_CASE', 'File required': 'FILE_REQUIRED',
+  'Invalid profile': 'INVALID_PROFILE',
+  'Choose a valid role': 'INVALID_ROLE',
+  'Name required': 'NAME_REQUIRED',
+  'Invalid case': 'INVALID_CASE',
+  'File required': 'FILE_REQUIRED',
 }
 export function fail(res, status, input) {
-  const code = messages[input] ? input : legacy[input] || (status >= 500 ? 'SERVER_ERROR' : 'INVALID_REQUEST')
+  const code = messages[input]
+    ? input
+    : legacy[input] || (status >= 500 ? 'SERVER_ERROR' : 'INVALID_REQUEST')
   return res.status(status).json({ code, error: messages[code] })
 }

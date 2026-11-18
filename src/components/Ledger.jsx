@@ -24,7 +24,9 @@ export default function Ledger({ columns, rows, rowKey, onRowClick, highlight, f
           return (
             <div
               key={key}
-              className={`ledger-row ${onRowClick ? 'clickable' : ''} ${highlight === key ? 'marked' : ''}`}
+              className={`ledger-row ${onRowClick ? 'clickable' : ''} ${
+                highlight === key ? 'marked' : ''
+              }`}
               style={{ gridTemplateColumns: template }}
               onClick={onRowClick ? () => onRowClick(row) : undefined}
             >

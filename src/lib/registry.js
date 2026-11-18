@@ -13,8 +13,12 @@ export const abi = [
   'function voidEvidence(uint256,string)',
   'function recoverCustody(uint256,address,string)',
 ]
-export const roleAbi = ['function roles(address) view returns (uint8)', 'function setRole(address,uint8)']
+export const roleAbi = [
+  'function roles(address) view returns (uint8)',
+  'function setRole(address,uint8)',
+]
 export const roles = ['None', 'Admin', 'Investigator', 'Analyst', 'Auditor']
 export const statuses = ['Collected', 'InAnalysis', 'Stored', 'Released', 'Disposed', 'Voided']
 export const roleCode = (name) => roles.indexOf(name)
-export const short = (value = '') => value.length > 16 ? `${value.slice(0, 9)}…${value.slice(-6)}` : value
+export const short = (value = '') =>
+  value.length > 16 ? `${value.slice(0, 9)}…${value.slice(-6)}` : value

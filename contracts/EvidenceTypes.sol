@@ -2,8 +2,22 @@
 pragma solidity ^0.8.24;
 
 library EvidenceTypes {
-    enum Role { None, Admin, Investigator, Analyst, Auditor }
-    enum Status { Collected, InAnalysis, Stored, Released, Disposed, Voided }
+    enum Role {
+        None,
+        Admin,
+        Investigator,
+        Analyst,
+        Auditor
+    }
+
+    enum Status {
+        Collected,
+        InAnalysis,
+        Stored,
+        Released,
+        Disposed,
+        Voided
+    }
 
     struct Evidence {
         uint256 id;
