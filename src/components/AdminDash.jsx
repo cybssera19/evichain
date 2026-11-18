@@ -2,34 +2,70 @@ import { STATUS, CASE_COLOR, evidenceCode, initials } from '../lib/format'
 import './admindash.css'
 
 const ROLE_HEX = {
-  Admin: '#e8452c', Investigator: '#2d5be3', Analyst: '#e8a317', Auditor: '#1f9d63',
+  Admin: '#e8452c',
+  Investigator: '#2d5be3',
+  Analyst: '#e8a317',
+  Auditor: '#1f9d63',
 }
 const STAMP_HEX = {
-  Collected: '#2d5be3', InAnalysis: '#c98a0a', Stored: '#1f9d63',
-  Released: '#0f4a3c', Disposed: '#9aa0a6', Voided: '#9aa0a6',
+  Collected: '#2d5be3',
+  InAnalysis: '#c98a0a',
+  Stored: '#1f9d63',
+  Released: '#0f4a3c',
+  Disposed: '#9aa0a6',
+  Voided: '#9aa0a6',
 }
 const STAMP_LABEL = {
-  Collected: 'Collected', InAnalysis: 'In analysis', Stored: 'Stored',
-  Released: 'Released', Disposed: 'Disposed', Voided: 'Void',
+  Collected: 'Collected',
+  InAnalysis: 'In analysis',
+  Stored: 'Stored',
+  Released: 'Released',
+  Disposed: 'Disposed',
+  Voided: 'Void',
 }
 const ROLE_LABEL = {
-  Admin: 'Admin', Investigator: 'Investigator', Analyst: 'Analyst', Auditor: 'Auditor',
+  Admin: 'Admin',
+  Investigator: 'Investigator',
+  Analyst: 'Analyst',
+  Auditor: 'Auditor',
 }
 
-export default function AdminDash({ evidence, cases, users, name, onOpenEvidence, onOpenCase, onManageUsers, onOpenLog, me }) {
+export default function AdminDash({
+  evidence,
+  cases,
+  users,
+  name,
+  onOpenEvidence,
+  onOpenCase,
+  onManageUsers,
+  onOpenLog,
+  me,
+}) {
   const activeCases = cases.filter((c) => c.status !== 'Closed')
-  const recentEvidence = [...evidence].sort((a, b) => Number(b.createdAt) - Number(a.createdAt)).slice(0, 8)
-  const counts = Object.keys(STATUS).map((s) => ({ s, n: evidence.filter((e) => e.status === s).length }))
-  const totalActive = evidence.filter((e) => !['Voided', 'Released', 'Disposed'].includes(e.status)).length
+  const recentEvidence = [...evidence]
+    .sort((a, b) => Number(b.createdAt) - Number(a.createdAt))
+    .slice(0, 8)
+  const counts = Object.keys(STATUS).map((s) => ({
+    s,
+    n: evidence.filter((e) => e.status === s).length,
+  }))
+  const totalActive = evidence.filter(
+    (e) => !['Voided', 'Released', 'Disposed'].includes(e.status),
+  ).length
   const myName = me?.user?.name || ''
   const greeting = myName ? `Hello, ${myName.split(' ')[0]}` : 'Dashboard'
-  const today = new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
+  const today = new Date().toLocaleDateString('en-GB', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  })
 
   const chainLog = [...evidence]
     .filter((e) => e.createdAt)
     .map((e) => {
       const byWallet = e.registeredBy || e.holder
-      const byUser = users.find(u => u.wallet?.toLowerCase() === byWallet?.toLowerCase())
+      const byUser = users.find((u) => u.wallet?.toLowerCase() === byWallet?.toLowerCase())
       return {
         type: 'Registration',
         id: e.id,
@@ -41,7 +77,7 @@ export default function AdminDash({ evidence, cases, users, name, onOpenEvidence
     .sort((a, b) => b.at - a.at)
     .slice(0, 10)
 
-  const registeredUsers = users.filter(u => u.role !== 'None')
+  const registeredUsers = users.filter((u) => u.role !== 'None')
 
   return (
     <div className="admin-dash">
@@ -52,7 +88,9 @@ export default function AdminDash({ evidence, cases, users, name, onOpenEvidence
           <h1 className="admin-greet">{greeting}</h1>
         </div>
         <div className="admin-header-actions">
-          <button className="secondary" onClick={onOpenLog}>Activity log</button>
+          <button className="secondary" onClick={onOpenLog}>
+            Activity log
+          </button>
           <button onClick={onManageUsers}>Add user</button>
         </div>
       </div>
@@ -62,9 +100,13 @@ export default function AdminDash({ evidence, cases, users, name, onOpenEvidence
         <div className="admin-section-title">
           <div className="admin-section-label">
             <h2>Registered users</h2>
-            <span className="adm-muted">{registeredUsers.length} {registeredUsers.length === 1 ? 'person' : 'people'}</span>
+            <span className="adm-muted">
+              {registeredUsers.length} {registeredUsers.length === 1 ? 'person' : 'people'}
+            </span>
           </div>
-          <button className="btn-text" onClick={onManageUsers}>Manage →</button>
+          <button className="btn-text" onClick={onManageUsers}>
+            Manage →
+          </button>
         </div>
         <div className="admin-rail-wrap">
           <div className="admin-user-cards">
@@ -74,7 +116,11 @@ export default function AdminDash({ evidence, cases, users, name, onOpenEvidence
               const roleColor = ROLE_HEX[u.role] ?? '#9aa0a6'
               const rot = [-1.5, 1, -0.8, 1.6, -1.2][i % 5]
               return (
-                <div className="admin-id-card" key={u.wallet} style={{ transform: `rotate(${rot}deg)` }}>
+                <div
+                  className="admin-id-card"
+                  key={u.wallet}
+                  style={{ transform: `rotate(${rot}deg)` }}
+                >
                   <div className="admin-card-clip" />
                   <div className="admin-card-body">
                     <div className="admin-card-role-band" style={{ background: roleColor }}>
@@ -93,7 +139,9 @@ export default function AdminDash({ evidence, cases, users, name, onOpenEvidence
               )
             })}
             {!registeredUsers.length && (
-              <p className="adm-muted" style={{ padding: '40px 0', fontSize: 14 }}>No registered users yet.</p>
+              <p className="adm-muted" style={{ padding: '40px 0', fontSize: 14 }}>
+                No registered users yet.
+              </p>
             )}
           </div>
         </div>
@@ -102,20 +150,28 @@ export default function AdminDash({ evidence, cases, users, name, onOpenEvidence
       {/* Evidence + Chain row */}
       <div className="admin-main">
         <div className="admin-left">
-
           {/* Evidence table */}
           <div className="admin-section-title">
             <h2>Recent evidence</h2>
             <div className="admin-ev-meta">
               <span className="admin-ev-count">{totalActive} active</span>
               <div className="admin-ev-bar">
-                {counts.filter(x => x.n > 0).map(({ s, n }) => (
-                  <span key={s} className="admin-ev-seg" title={`${STATUS[s].label}: ${n}`}
-                    style={{ background: STATUS[s].color, flex: n }} />
-                ))}
+                {counts
+                  .filter((x) => x.n > 0)
+                  .map(({ s, n }) => (
+                    <span
+                      key={s}
+                      className="admin-ev-seg"
+                      title={`${STATUS[s].label}: ${n}`}
+                      style={{ background: STATUS[s].color, flex: n }}
+                    />
+                  ))}
               </div>
               <span className="admin-ev-detail adm-muted">
-                {counts.filter(x => x.n > 0).map(({ s, n }) => `${n} ${STATUS[s].label.toLowerCase()}`).join(', ')}
+                {counts
+                  .filter((x) => x.n > 0)
+                  .map(({ s, n }) => `${n} ${STATUS[s].label.toLowerCase()}`)
+                  .join(', ')}
               </span>
             </div>
           </div>
@@ -135,12 +191,19 @@ export default function AdminDash({ evidence, cases, users, name, onOpenEvidence
                     const isVoid = e.status === 'Voided'
                     const col = STAMP_HEX[e.status] ?? '#9aa0a6'
                     return (
-                      <tr key={e.id} className={isVoid ? 'void-row' : ''} onClick={() => onOpenEvidence(e.id)}>
+                      <tr
+                        key={e.id}
+                        className={isVoid ? 'void-row' : ''}
+                        onClick={() => onOpenEvidence(e.id)}
+                      >
                         <td className="adm-mono">{evidenceCode(e.id)}</td>
                         <td className="admin-ev-name">{e.kind}</td>
                         <td className="admin-ev-holder">{name(e.holder)}</td>
                         <td>
-                          <span className="admin-ev-stamp" style={{ color: col, border: `1.5px solid ${col}` }}>
+                          <span
+                            className="admin-ev-stamp"
+                            style={{ color: col, border: `1.5px solid ${col}` }}
+                          >
                             {STAMP_LABEL[e.status] ?? e.status}
                           </span>
                         </td>
@@ -148,7 +211,11 @@ export default function AdminDash({ evidence, cases, users, name, onOpenEvidence
                     )
                   })}
                   {!recentEvidence.length && (
-                    <tr><td colSpan={4} className="admin-ev-empty">No evidence yet.</td></tr>
+                    <tr>
+                      <td colSpan={4} className="admin-ev-empty">
+                        No evidence yet.
+                      </td>
+                    </tr>
                   )}
                 </tbody>
               </table>
@@ -160,7 +227,9 @@ export default function AdminDash({ evidence, cases, users, name, onOpenEvidence
         <div className="admin-right">
           <div className="admin-section-title">
             <h2>Recent chain</h2>
-            <button className="btn-text" onClick={onOpenLog}>Open log →</button>
+            <button className="btn-text" onClick={onOpenLog}>
+              Open log →
+            </button>
           </div>
           <div className="admin-chain-wrap">
             <div className="admin-chain-scroll">
@@ -178,15 +247,23 @@ export default function AdminDash({ evidence, cases, users, name, onOpenEvidence
                       </div>
                       <span className="admin-chain-time">
                         {entry.at
-                          ? new Date(entry.at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) +
+                          ? new Date(entry.at).toLocaleDateString('en-GB', {
+                              day: 'numeric',
+                              month: 'short',
+                            }) +
                             ', ' +
-                            new Date(entry.at).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+                            new Date(entry.at).toLocaleTimeString('en-GB', {
+                              hour: '2-digit',
+                              minute: '2-digit',
+                            })
                           : '—'}
                       </span>
                     </div>
                     <p className="admin-chain-by">by {entry.by}</p>
                     {entry.block && (
-                      <p className="admin-chain-block adm-mono">block {Number(entry.block).toLocaleString('en-US')}</p>
+                      <p className="admin-chain-block adm-mono">
+                        block {Number(entry.block).toLocaleString('en-US')}
+                      </p>
                     )}
                   </div>
                   {i < chainLog.length - 1 && (
@@ -198,7 +275,9 @@ export default function AdminDash({ evidence, cases, users, name, onOpenEvidence
                 </div>
               ))}
               {!chainLog.length && (
-                <p className="adm-muted" style={{ fontSize: 14, padding: '20px 24px' }}>No transactions yet.</p>
+                <p className="adm-muted" style={{ fontSize: 14, padding: '20px 24px' }}>
+                  No transactions yet.
+                </p>
               )}
             </div>
           </div>
@@ -222,7 +301,9 @@ export default function AdminDash({ evidence, cases, users, name, onOpenEvidence
                 <p className="admin-case-no adm-mono">{c.no}</p>
                 <p className="admin-case-title">{c.title}</p>
                 <div className="admin-case-foot">
-                  <span className="admin-case-ev">{evCount} {evCount === 1 ? 'item' : 'items'}</span>
+                  <span className="admin-case-ev">
+                    {evCount} {evCount === 1 ? 'item' : 'items'}
+                  </span>
                   <span className="admin-case-status">
                     <i className="adm-dot" style={{ background: caseColor }} />
                     {statusLabel}
@@ -232,7 +313,11 @@ export default function AdminDash({ evidence, cases, users, name, onOpenEvidence
             </button>
           )
         })}
-        {!activeCases.length && <p className="adm-muted" style={{ fontSize: 14 }}>No active cases.</p>}
+        {!activeCases.length && (
+          <p className="adm-muted" style={{ fontSize: 14 }}>
+            No active cases.
+          </p>
+        )}
       </div>
     </div>
   )

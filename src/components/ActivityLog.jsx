@@ -26,8 +26,11 @@ const PER_PAGE = 12
 function fmt(ts) {
   if (!ts) return '—'
   const d = new Date(ts)
-  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) +
-    ', ' + d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+  return (
+    d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) +
+    ', ' +
+    d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+  )
 }
 
 export default function ActivityLog({ events, onOpenEvidence }) {
@@ -37,7 +40,9 @@ export default function ActivityLog({ events, onOpenEvidence }) {
 
   const counts = useMemo(() => {
     const c = {}
-    events.forEach((e) => { c[e.action] = (c[e.action] || 0) + 1 })
+    events.forEach((e) => {
+      c[e.action] = (c[e.action] || 0) + 1
+    })
     return c
   }, [events])
 
@@ -48,8 +53,9 @@ export default function ActivityLog({ events, onOpenEvidence }) {
       .filter((r) => {
         if (action && r.action !== action) return false
         if (!q) return true
-        return [evidenceCode(r.evidenceId), r.actor, r.detail, r.action]
-          .some((v) => (v || '').toLowerCase().includes(q))
+        return [evidenceCode(r.evidenceId), r.actor, r.detail, r.action].some((v) =>
+          (v || '').toLowerCase().includes(q),
+        )
       })
   }, [events, action, query])
 
@@ -57,7 +63,10 @@ export default function ActivityLog({ events, onOpenEvidence }) {
   const current = Math.min(page, pages)
   const slice = rows.slice((current - 1) * PER_PAGE, current * PER_PAGE)
 
-  const pick = (f) => { setAction((p) => (p === f ? null : f)); setPage(1) }
+  const pick = (f) => {
+    setAction((p) => (p === f ? null : f))
+    setPage(1)
+  }
 
   return (
     <div className="actlog">
@@ -70,17 +79,31 @@ export default function ActivityLog({ events, onOpenEvidence }) {
         <span className="actlog-search">
           <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
             <circle cx="6" cy="6" r="4.4" stroke="currentColor" strokeWidth="1.5" />
-            <path d="M9.6 9.6L12.2 12.2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            <path
+              d="M9.6 9.6L12.2 12.2"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
           </svg>
           <input
             placeholder="Search evidence ID or user"
             value={query}
-            onChange={(e) => { setQuery(e.target.value); setPage(1) }}
+            onChange={(e) => {
+              setQuery(e.target.value)
+              setPage(1)
+            }}
           />
         </span>
 
         <div className="actlog-tabs">
-          <button className={!action ? 'actlog-tab is-on' : 'actlog-tab'} onClick={() => { setAction(null); setPage(1) }}>
+          <button
+            className={!action ? 'actlog-tab is-on' : 'actlog-tab'}
+            onClick={() => {
+              setAction(null)
+              setPage(1)
+            }}
+          >
             All <b>{events.length}</b>
           </button>
           {FILTERS.filter((f) => counts[f]).map((f) => (
@@ -144,7 +167,11 @@ export default function ActivityLog({ events, onOpenEvidence }) {
             Showing {(current - 1) * PER_PAGE + 1}–{Math.min(current * PER_PAGE, rows.length)} of {rows.length} events
           </span>
           <div className="actlog-pages">
-            <button className="actlog-page" disabled={current === 1} onClick={() => setPage(current - 1)}>
+            <button
+              className="actlog-page"
+              disabled={current === 1}
+              onClick={() => setPage(current - 1)}
+            >
               Previous
             </button>
             {Array.from({ length: pages }, (_, i) => (
@@ -156,7 +183,11 @@ export default function ActivityLog({ events, onOpenEvidence }) {
                 {i + 1}
               </button>
             ))}
-            <button className="actlog-page" disabled={current === pages} onClick={() => setPage(current + 1)}>
+            <button
+              className="actlog-page"
+              disabled={current === pages}
+              onClick={() => setPage(current + 1)}
+            >
               Next
             </button>
           </div>

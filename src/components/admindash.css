@@ -12,9 +12,20 @@
 
 /* ── Shared helpers ───────────────────────────────────────────────────────── */
 
-.adm-muted { color: var(--mute); font-size: 13px; }
-.adm-mono  { font-family: var(--font-mono); }
-.adm-dot   { display: inline-block; width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.adm-muted {
+  color: var(--mute);
+  font-size: 13px;
+}
+.adm-mono {
+  font-family: var(--font-mono);
+}
+.adm-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
 
 /* ── Header ───────────────────────────────────────────────────────────────── */
 
@@ -86,7 +97,10 @@
   opacity: 0.8;
   transition: opacity 0.15s;
 }
-.btn-text:hover { opacity: 1 !important; filter: none !important; }
+.btn-text:hover {
+  opacity: 1 !important;
+  filter: none !important;
+}
 
 /* ═══════════════════════════════════════════════════════════════════════════
    User Rail
@@ -100,7 +114,9 @@
 }
 
 /* no rail-line div needed */
-.admin-rail-line { display: none; }
+.admin-rail-line {
+  display: none;
+}
 
 .admin-user-cards {
   display: flex;
@@ -263,11 +279,21 @@
 }
 
 @media (max-width: 1100px) {
-  .admin-main { grid-template-columns: 1fr; }
+  .admin-main {
+    grid-template-columns: 1fr;
+  }
 }
 
-.admin-left { display: flex; flex-direction: column; min-height: 0; }
-.admin-right { display: flex; flex-direction: column; min-height: 0; }
+.admin-left {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.admin-right {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
 
 /* ── Evidence bar ─────────────────────────────────────────────────────────── */
 
@@ -301,7 +327,10 @@
   min-width: 6px;
 }
 
-.admin-ev-detail { font-size: 12px; color: var(--mute); }
+.admin-ev-detail {
+  font-size: 12px;
+  color: var(--mute);
+}
 
 /* ── Evidence table ─────────────────────────────────────────────────────────*/
 
@@ -356,13 +385,17 @@
   border-bottom: 1px solid var(--line);
 }
 
-.admin-ev-table tbody tr:last-child td { border-bottom: none; }
+.admin-ev-table tbody tr:last-child td {
+  border-bottom: none;
+}
 
 .admin-ev-table tbody tr {
   cursor: pointer;
   transition: background 0.1s;
 }
-.admin-ev-table tbody tr:hover { background: var(--paper-3); }
+.admin-ev-table tbody tr:hover {
+  background: var(--paper-3);
+}
 
 .admin-ev-table .void-row td {
   text-decoration: line-through;
@@ -543,10 +576,16 @@
   transition: background 0.1s;
 }
 
-.admin-chain-entry:hover { background: #faf5ec; }
+.admin-chain-entry:hover {
+  background: #faf5ec;
+}
 
-.admin-chain-entry-highlight { background: #e7efdf !important; }
-.admin-chain-entry-highlight:hover { background: #ddecd3 !important; }
+.admin-chain-entry-highlight {
+  background: #e7efdf !important;
+}
+.admin-chain-entry-highlight:hover {
+  background: #ddecd3 !important;
+}
 
 .admin-chain-entry-head {
   display: flex;

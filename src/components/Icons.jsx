@@ -1,4 +1,9 @@
-const base = { fill: 'none', stroke: 'currentColor', strokeLinecap: 'round', strokeLinejoin: 'round' }
+const base = {
+  fill: 'none',
+  stroke: 'currentColor',
+  strokeLinecap: 'round',
+  strokeLinejoin: 'round',
+}
 
 export const ChevronRight = ({ size = 14 }) => (
   <svg width={size} height={size} viewBox="0 0 14 14" {...base} strokeWidth="1.6">
@@ -116,7 +121,10 @@ export const LinkHorizontal = ({ bg = '#FBF7EC' }) => (
 
 export const FileIcon = ({ label }) => (
   <svg width="34" height="40" viewBox="0 0 36 42" fill="none" stroke="#CFC6B0" strokeWidth="1.4">
-    <path d="M2 4C2 2.9 2.9 2 4 2H24L34 12V38C34 39.1 33.1 40 32 40H4C2.9 40 2 39.1 2 38Z" fill="#FFFDF7" />
+    <path
+      d="M2 4C2 2.9 2.9 2 4 2H24L34 12V38C34 39.1 33.1 40 32 40H4C2.9 40 2 39.1 2 38Z"
+      fill="#FFFDF7"
+    />
     <path d="M24 2V12H34" fill="#EDE6D4" />
     {label && (
       <text x="8" y="31" fontFamily="monospace" fontSize="8" fill="#6B6455" stroke="none">
@@ -129,7 +137,25 @@ export const FileIcon = ({ label }) => (
 export const Logo = ({ light }) => (
   <svg width="28" height="28" viewBox="0 0 28 28">
     <rect width="28" height="28" rx="8" fill={light ? '#F6F1E4' : '#17191C'} />
-    <rect x="5.5" y="9.5" width="10.5" height="9" rx="4.5" stroke={light ? '#0F4A3C' : '#F6F1E4'} strokeWidth="2" fill="none" />
-    <rect x="12" y="9.5" width="10.5" height="9" rx="4.5" stroke="#E8452C" strokeWidth="2" fill="none" />
+    <rect
+      x="5.5"
+      y="9.5"
+      width="10.5"
+      height="9"
+      rx="4.5"
+      stroke={light ? '#0F4A3C' : '#F6F1E4'}
+      strokeWidth="2"
+      fill="none"
+    />
+    <rect
+      x="12"
+      y="9.5"
+      width="10.5"
+      height="9"
+      rx="4.5"
+      stroke="#E8452C"
+      strokeWidth="2"
+      fill="none"
+    />
   </svg>
 )

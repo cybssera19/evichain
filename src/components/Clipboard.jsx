@@ -14,7 +14,10 @@ const Clip = () => (
     </defs>
     <path d="M60 6C60 2.7 62.7 0 66 0H124C127.3 0 130 2.7 130 6V18H60Z" fill="url(#clipmetal)" />
     <rect x="82" y="5" width="26" height="8" rx="4" fill="#5D666C" />
-    <path d="M8 22C8 19.8 9.8 18 12 18H178C180.2 18 182 19.8 182 22V44C182 52.8 174.8 60 166 60H24C15.2 60 8 52.8 8 44Z" fill="url(#clipmetal)" />
+    <path
+      d="M8 22C8 19.8 9.8 18 12 18H178C180.2 18 182 19.8 182 22V44C182 52.8 174.8 60 166 60H24C15.2 60 8 52.8 8 44Z"
+      fill="url(#clipmetal)"
+    />
     <path d="M20 30H170" stroke="#FFFFFF" strokeOpacity="0.6" strokeWidth="1.5" />
   </svg>
 )
