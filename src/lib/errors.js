@@ -10,6 +10,14 @@ export function errorMessage(error) {
     return 'Could not connect to the wallet or service. Check your network and try again.'
   if (code === 'INSUFFICIENT_FUNDS')
     return 'You do not have enough ETH on this network to pay the transaction fee.'
+  const details = [error?.message, error?.shortMessage, error?.error?.message, error?.info?.error?.message]
+    .filter(Boolean)
+    .join(' ')
+  const nonceMismatch = details.match(/Expected nonce to be (\d+) but got (\d+)/i)
+  if (nonceMismatch)
+    return `Wallet sent nonce ${nonceMismatch[2]}, but the chain expects ${nonceMismatch[1]}. Reload and try again.`
+  if (code === 'NONCE_EXPIRED' || /nonce too (high|low)/i.test(details))
+    return 'Wallet nonce is out of sync with this chain. Reload and try again.'
   if (code === 'CALL_EXCEPTION') {
     const reasons = {
       'case not open': 'This case is not open for registration. Select a case under investigation.',

@@ -141,12 +141,12 @@ export default function CaseDetail({
                 <b>
                   {kase.created_at
                     ? `${formatDate(kase.created_at)} by ${name(kase.created_by)}`
-                    : '—'}
+                    : '-'}
                 </b>
               </div>
               <div>
                 <span className="muted">Last updated</span>
-                <b>{updated ? formatDate(updated) : '—'}</b>
+                <b>{updated ? formatDate(updated) : '-'}</b>
               </div>
             </div>
           </section>

@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react'
 import { evidenceCode, shortTx } from '../lib/format'
+import PageHeading from './PageHeading'
 import './activitylog.css'
 
 const ACTION_HEX = {
@@ -24,7 +25,7 @@ const FILTERS = [
 const PER_PAGE = 12
 
 function fmt(ts) {
-  if (!ts) return '—'
+  if (!ts) return '-'
   const d = new Date(ts)
   return (
     d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) +
@@ -33,7 +34,7 @@ function fmt(ts) {
   )
 }
 
-export default function ActivityLog({ events, onOpenEvidence }) {
+export default function ActivityLog({ events, role, onOpenEvidence }) {
   const [action, setAction] = useState(null)
   const [query, setQuery] = useState('')
   const [page, setPage] = useState(1)
@@ -70,10 +71,11 @@ export default function ActivityLog({ events, onOpenEvidence }) {
 
   return (
     <div className="actlog">
-      <header className="actlog-head">
-        <h1>Activity log</h1>
-        <span className="actlog-total">{events.length} events on-chain</span>
-      </header>
+      <PageHeading
+        title="Activity Log"
+        role={role}
+        actions={<span className="actlog-total">{events.length} events on-chain</span>}
+      />
 
       <div className="actlog-toolbar">
         <span className="actlog-search">
@@ -146,9 +148,9 @@ export default function ActivityLog({ events, onOpenEvidence }) {
                   </td>
                   <td className="actlog-detail">{r.detail}</td>
                   <td className="actlog-block actlog-mono">
-                    {r.block ? Number(r.block).toLocaleString('en-US') : '—'}
+                    {r.block ? Number(r.block).toLocaleString('en-US') : '-'}
                   </td>
-                  <td className="actlog-tx actlog-mono">{r.txHash ? shortTx(r.txHash) : '—'}</td>
+                  <td className="actlog-tx actlog-mono">{r.txHash ? shortTx(r.txHash) : '-'}</td>
                 </tr>
               )
             })}

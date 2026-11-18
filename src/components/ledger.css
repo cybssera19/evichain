@@ -89,7 +89,13 @@
 }
 
 .ledger-empty {
+  display: grid;
+  place-items: center;
+  min-height: 120px;
+  width: calc(100% + 72px);
+  margin: 0 0 0 -72px;
   padding: 28px 0;
+  text-align: center;
   color: var(--ink-soft);
   font-size: 14px;
 }

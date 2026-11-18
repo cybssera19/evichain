@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react'
+import PageHeading from './PageHeading'
 import { createPortal } from 'react-dom'
 import { initials, shortAddr } from '../lib/format'
 import './usermanager.css'
@@ -180,7 +181,7 @@ function DeleteConfirm({ user, onConfirm, onClose, busy }) {
           <span className="um-mini-avatar">{initials(user.name || 'U')}</span>
           <div className="um-mini-text">
             <b>{user.name}</b>
-            <span>{user.unit || '—'}</span>
+            <span>{user.unit || '-'}</span>
             <span className="um-mono">{shortAddr(user.wallet)}</span>
           </div>
           <span className="um-stamp">Role revoked</span>
@@ -261,54 +262,15 @@ export default function UserManager({ users, me, busy, onAdd, onEdit, onDelete, 
 
   return (
     <div className="um">
-      <header className="um-head">
-        <h1>Users</h1>
-        <button className="um-add" onClick={() => setAdding(true)}>
-          Add user
-        </button>
-      </header>
-
-      {pending.length > 0 && (
-        <section className="um-pending">
-          <div className="um-pending-head">
-            <h2>Pending approvals</h2>
-            <span className="um-pending-count">{pending.length}</span>
-          </div>
-          <ul className="um-pending-list">
-            {pending.map((u) => (
-              <li className="um-pending-row" key={u.wallet}>
-                <span className="um-avatar">{initials(u.name || 'U')}</span>
-                <div className="um-pending-text">
-                  <b>{u.name || '—'}</b>
-                  <span className="um-mono">{shortAddr(u.wallet)}</span>
-                </div>
-                <span className="um-pending-req">
-                  requests <i style={{ color: ROLE_HEX[u.requested_role] }}>{u.requested_role}</i>
-                </span>
-                <button
-                  className="um-pending-approve"
-                  disabled={busy}
-                  onClick={() =>
-                    onAdd(
-                      {
-                        wallet: u.wallet,
-                        role: u.requested_role,
-                        name: u.name || '',
-                        nip: u.nip || '',
-                        unit: u.unit || '',
-                        email: u.email || '',
-                      },
-                      () => {},
-                    )
-                  }
-                >
-                  Approve
-                </button>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
+      <PageHeading
+        title="Users"
+        role={me.role}
+        actions={
+          <button className="um-add" onClick={() => setAdding(true)}>
+            Add user
+          </button>
+        }
+      />
 
       <div className="um-toolbar">
         <span className="um-search">
@@ -345,6 +307,48 @@ export default function UserManager({ users, me, busy, onAdd, onEdit, onDelete, 
         </div>
       </div>
 
+      {pending.length > 0 && (
+        <section className="um-pending">
+          <div className="um-pending-head">
+            <h2>Pending approvals</h2>
+            <span className="um-pending-count">{pending.length}</span>
+          </div>
+          <ul className="um-pending-list">
+            {pending.map((u) => (
+              <li className="um-pending-row" key={u.wallet}>
+                <span className="um-avatar">{initials(u.name || 'U')}</span>
+                <div className="um-pending-text">
+                  <b>{u.name || '-'}</b>
+                  <span className="um-mono">{shortAddr(u.wallet)}</span>
+                </div>
+                <span className="um-pending-req">
+                  requests <i style={{ color: ROLE_HEX[u.requested_role] }}>{u.requested_role}</i>
+                </span>
+                <button
+                  className="um-pending-approve"
+                  disabled={busy}
+                  onClick={() =>
+                    onAdd(
+                      {
+                        wallet: u.wallet,
+                        role: u.requested_role,
+                        name: u.name || '',
+                        nip: u.nip || '',
+                        unit: u.unit || '',
+                        email: u.email || '',
+                      },
+                      () => {},
+                    )
+                  }
+                >
+                  Approve
+                </button>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       <div className="um-grid">
         {shown.map((u) => {
           const hex = ROLE_HEX[u.role] ?? '#9aa0a6'
@@ -365,7 +369,7 @@ export default function UserManager({ users, me, busy, onAdd, onEdit, onDelete, 
                 <div className="um-person">
                   <span className="um-avatar">{initials(u.name || 'U')}</span>
                   <div className="um-person-text">
-                    <b className="um-name">{u.name || '—'}</b>
+                    <b className="um-name">{u.name || '-'}</b>
                     {u.email && <span className="um-email">{u.email}</span>}
                     {u.unit && <span className="um-unit">{u.unit}</span>}
                   </div>

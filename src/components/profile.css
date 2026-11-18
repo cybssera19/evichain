@@ -21,6 +21,7 @@
 .profile-list button:hover { background: rgba(0, 0, 0, 0.035); }
 .profile-list b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .profile-list-date { font-size: 12px; color: var(--mute, #6b6455); }
+.profile-empty { display: grid; place-items: center; min-height: 120px; margin: 0; color: var(--ink-soft); text-align: center; }
 .panel h2 .count { margin-left: 10px; font-size: 12px; font-weight: 600; color: var(--mute, #6b6455); background: #e5dfce; padding: 4px 9px; border-radius: 20px; }
 @media (max-width: 1000px) {
   .profile-grid { grid-template-columns: 1fr; }

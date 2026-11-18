@@ -84,13 +84,17 @@
 .folder-empty {
   position: absolute;
   top: 82px;
-  left: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: calc(100% - 72px);
   padding: 8px 12px;
   border: 1.2px dashed #c9bfa3;
   border-radius: 8px;
   font-size: 13px;
   font-weight: 500;
   color: var(--ink-soft);
+  text-align: center;
 }
 
 .folder-front {

@@ -32,15 +32,15 @@ export default function Profile({
         </div>
         <div className="info">
           <span className="muted">Staff ID</span>
-          <b>{profile?.nip || '—'}</b>
+          <b>{profile?.nip || '-'}</b>
         </div>
         <div className="info">
           <span className="muted">Unit</span>
-          <b>{profile?.unit || '—'}</b>
+          <b>{profile?.unit || '-'}</b>
         </div>
         <div className="info">
           <span className="muted">Email</span>
-          <b>{profile?.email || '—'}</b>
+          <b>{profile?.email || '-'}</b>
         </div>
         <p className="muted profile-note">
           Your identity is proven by a wallet signature, not a password. Only an Admin can change
@@ -92,7 +92,7 @@ export default function Profile({
               ))}
             </ul>
           ) : (
-            <p className="muted">You are not holding any evidence right now.</p>
+            <p className="profile-empty">You are not holding any evidence right now.</p>
           )}
         </section>
       </div>

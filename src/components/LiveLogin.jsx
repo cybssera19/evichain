@@ -15,7 +15,7 @@ export default function LiveLogin({
     <div className="login live-login">
       <header className="login-top">
         <span className="brand light">
-          <Logo light />
+          <Logo />
           evichain
         </span>
       </header>

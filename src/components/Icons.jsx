@@ -134,16 +134,16 @@ export const FileIcon = ({ label }) => (
   </svg>
 )
 
-export const Logo = ({ light }) => (
+export const Logo = () => (
   <svg width="28" height="28" viewBox="0 0 28 28">
-    <rect width="28" height="28" rx="8" fill={light ? '#F6F1E4' : '#17191C'} />
+    <rect width="28" height="28" rx="8" fill="#EADCC4" />
     <rect
       x="5.5"
       y="9.5"
       width="10.5"
       height="9"
       rx="4.5"
-      stroke={light ? '#0F4A3C' : '#F6F1E4'}
+      stroke="#0F4A3C"
       strokeWidth="2"
       fill="none"
     />

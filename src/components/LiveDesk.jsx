@@ -1,11 +1,10 @@
-import { CaseSticker, StatusStamp } from './Status'
-import { MiniTag, RowTag } from './Tags'
-import { TapeH } from './Tape'
-import { formatToday } from '../lib/format'
-import './folder.css'
+import { CaseSticker, StatusStamp } from "./Status";
+import { MiniTag, RowTag } from "./Tags";
+import { TapeH } from "./Tape";
+import "./folder.css";
 
 export function LiveFolder({ kase, items, onOpen }) {
-  const Front = onOpen ? 'button' : 'div'
+  const Front = onOpen ? "button" : "div";
   return (
     <div className="folder live-folder">
       <div className="folder-tab mono">{kase.no}</div>
@@ -32,7 +31,7 @@ export function LiveFolder({ kase, items, onOpen }) {
         <span className="folder-empty">No evidence yet</span>
       )}
       <Front
-        type={onOpen ? 'button' : undefined}
+        type={onOpen ? "button" : undefined}
         className="folder-front"
         onClick={onOpen ? () => onOpen(kase.no) : undefined}
       >
@@ -42,22 +41,27 @@ export function LiveFolder({ kase, items, onOpen }) {
         </div>
         <div className="folder-foot">
           <span>
-            {items.length} evidence {items.length === 1 ? 'item' : 'items'}
+            {items.length} evidence {items.length === 1 ? "item" : "items"}
           </span>
           {onOpen && <span className="light">View cases →</span>}
         </div>
       </Front>
     </div>
-  )
+  );
 }
-
 export function LiveRecent({ items, onOpen }) {
   return (
     <TapeH
       segments={(items.length ? items : [null]).map((item) =>
         item ? (
-          <button type="button" className="live-segment" onClick={() => onOpen(item.id)}>
-            <span className="seg-block mono">EVIDENCE #{String(item.id).padStart(3, '0')}</span>
+          <button
+            type="button"
+            className="live-segment"
+            onClick={() => onOpen(item.id)}
+          >
+            <span className="seg-block mono">
+              EVIDENCE #{String(item.id).padStart(3, "0")}
+            </span>
             <span className="entry-title">
               <RowTag status={item.status} />
               <b>{item.kind}</b>
@@ -66,13 +70,9 @@ export function LiveRecent({ items, onOpen }) {
             <StatusStamp status={item.status} />
           </button>
         ) : (
-          <p className="muted">No evidence recorded yet.</p>
-        ),
+          <p className="muted live-recent-empty">No evidence recorded yet.</p>
+        )
       )}
     />
-  )
-}
-
-export function Today() {
-  return <p className="date">{formatToday()}</p>
+  );
 }

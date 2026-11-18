@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { ethers } from 'ethers'
 import { errorMessage } from './lib/errors'
+import { transactionSigner } from './lib/transactionSigner'
 import { caseAbi, caseStages, canonicalCase, caseHash } from '../shared/cases'
 import { abi, roleAbi, roles, statuses, short } from './lib/registry'
 import { Logo, Search } from './components/Icons'
+import PageHeading from './components/PageHeading'
 import Ledger from './components/Ledger'
 import { StatusStamp } from './components/Status'
-import { LiveFolder, LiveRecent, Today } from './components/LiveDesk'
+import { LiveFolder, LiveRecent } from './components/LiveDesk'
 import LiveLogin from './components/LiveLogin'
 import CaseDetail from './components/CaseDetail'
 import AdminDash from './components/AdminDash'
@@ -27,6 +29,7 @@ const ADDRESS = import.meta.env.VITE_CONTRACT_ADDRESS
 const ROLE_ADDRESS = import.meta.env.VITE_ROLE_CONTRACT_ADDRESS
 const RPC = import.meta.env.VITE_RPC_URL || 'http://127.0.0.1:8545'
 const CHAIN_ID = Number(import.meta.env.VITE_CHAIN_ID || 31337)
+const nonceProvider = CHAIN_ID === 31337 ? new ethers.JsonRpcProvider(RPC) : null
 const sha = async (file) =>
   '0x' +
   [...new Uint8Array(await crypto.subtle.digest('SHA-256', await file.arrayBuffer()))]
@@ -363,7 +366,7 @@ export default function App() {
     setError('')
     setNotice('')
     try {
-      const signer = await wallet()
+      const signer = transactionSigner(await wallet(), CHAIN_ID, nonceProvider)
       const target =
         useRoles === 'cases' ? await read().caseRegistry() : useRoles ? ROLE_ADDRESS : ADDRESS
       const contract = new ethers.Contract(
@@ -540,8 +543,8 @@ export default function App() {
     !['Voided', 'Released', 'Disposed'].includes(item.status)
   const nav = [
     'Dashboard',
-    'Evidence',
     'Cases',
+    'Evidence',
     'Verification',
     ...(me?.role === 'Admin' ? ['Users', 'Activity log'] : []),
     'Profile',
@@ -697,17 +700,16 @@ export default function App() {
             !(screen === 'Dashboard' && me.role === 'Admin') &&
             !(screen === 'Users' && me.role === 'Admin') &&
             !(screen === 'Activity log' && me.role === 'Admin') && (
-              <div className="head">
-                <div>
-                  <Today />
-                  <p className="eyebrow">{me.role}</p>
-                  <h1>{screen}</h1>
-                </div>
-                {me.role === 'Investigator' &&
-                  ['Dashboard', 'Evidence', 'Cases'].includes(screen) && (
+              <PageHeading
+                title={screen}
+                role={me.role}
+                actions={
+                  me.role === 'Investigator' &&
+                  ['Dashboard', 'Cases', 'Evidence'].includes(screen) && (
                     <button onClick={() => setScreen('Register')}>+ Register evidence</button>
-                  )}
-              </div>
+                  )
+                }
+              />
             )}
           {screen === 'Dashboard' && me.role === 'Admin' && (
             <AdminDash
@@ -995,7 +997,7 @@ export default function App() {
                 {history.map((h, i) => (
                   <div className="timeline" key={i}>
                     <b>{h.action}</b>
-                    <span className="muted">  {fmtDate(h.at)}  —  {name(h.actor)}</span>
+                    <span className="muted">  {fmtDate(h.at)}  -  {name(h.actor)}</span>
                     <p>{h.note || `${name(h.from)} → ${name(h.to)}`}</p>
                   </div>
                 ))}
@@ -1415,7 +1417,7 @@ export default function App() {
                   })
                 }
               }
-              return <ActivityLog events={actEvents} onOpenEvidence={openEvidence} />
+              return <ActivityLog events={actEvents} role={me.role} onOpenEvidence={openEvidence} />
             })()}
           {screen === 'Profile' && (
             <Profile

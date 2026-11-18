@@ -207,7 +207,7 @@
 }
 
 .case-tag {
-  /* Evidence label card — white body, colored tab on top */
+  /* Evidence label card - white body, colored tab on top */
   position: relative;
   text-align: left;
   cursor: pointer;
@@ -237,7 +237,7 @@
   z-index: 2;
 }
 
-/* Colored tab on top — trapezoid via clip-path, color = status color */
+/* Colored tab on top - trapezoid via clip-path, color = status color */
 .case-tag-band {
   display: block;
   height: 56px;
@@ -318,7 +318,7 @@
   display: inline-flex;
 }
 
-/* Status stamp on the tag — outline style like Figma */
+/* Status stamp on the tag - outline style like Figma */
 .case-tag-stamp {
   display: inline-flex;
   align-items: center;
