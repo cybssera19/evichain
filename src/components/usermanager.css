@@ -688,3 +688,81 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ── Pending approvals ──────────────────────────────────────────────────── */
+.um .um-pending {
+  margin-bottom: 20px;
+  padding: 16px 18px;
+  border: 1px solid rgba(232, 163, 23, .35);
+  border-radius: 14px;
+  background: rgba(232, 163, 23, .08);
+}
+.um .um-pending-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.um .um-pending-head h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 16px;
+  color: var(--ink);
+}
+.um .um-pending-count {
+  min-width: 22px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: #e8a317;
+  color: #231b05;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+.um .um-pending-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.um .um-pending-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--paper);
+}
+.um .um-pending-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.um .um-pending-text b {
+  font-size: 14px;
+  color: var(--ink);
+}
+.um .um-pending-req {
+  margin-left: auto;
+  font-size: 13px;
+  color: #6b7280;
+}
+.um .um-pending-req i {
+  font-style: normal;
+  font-weight: 700;
+}
+.um .um-pending-approve {
+  padding: 7px 16px;
+  border: none;
+  border-radius: 9px;
+  background: #1f9d63;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.um .um-pending-approve:hover {
+  background: #1b8a57;
+}

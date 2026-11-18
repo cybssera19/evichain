@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react'
+import { createPortal } from 'react-dom'
 import { initials, shortAddr } from '../lib/format'
 import './usermanager.css'
 
@@ -12,7 +13,7 @@ const ROLE_ORDER = ['Admin', 'Investigator', 'Analyst', 'Auditor']
 
 /* ── Clipboard modal shell ──────────────────────────────────────────────── */
 function Board({ title, onClose, children }) {
-  return (
+  return createPortal(
     <div className="um-backdrop" onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div className="um-board" role="dialog" aria-modal="true">
         <span className="um-board-clip" aria-hidden="true" />
@@ -33,15 +34,17 @@ function Board({ title, onClose, children }) {
           {children}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }
 
 /* ── Add / edit form ────────────────────────────────────────────────────── */
-function UserForm({ user, onSubmit, onClose, busy }) {
-  const edit = !!user
+function UserForm({ user, onSubmit, onClose, busy, approve }) {
+  const edit = !!user && !approve
+  const locked = edit || approve
   return (
-    <Board title={edit ? 'Edit user' : 'Add user'} onClose={onClose}>
+    <Board title={approve ? 'Approve user' : edit ? 'Edit user' : 'Add user'} onClose={onClose}>
       <form
         className="um-form"
         onSubmit={(e) => {
@@ -61,7 +64,7 @@ function UserForm({ user, onSubmit, onClose, busy }) {
               On-chain role <i>*</i>
             </span>
             <span className="um-select">
-              <select name="role" required defaultValue={user?.role || ''}>
+              <select name="role" required defaultValue={(approve ? user?.requested_role : user?.role) || ''}>
                 <option value="" disabled>
                   Select a role
                 </option>
@@ -95,10 +98,10 @@ function UserForm({ user, onSubmit, onClose, busy }) {
               pattern="0x[a-fA-F0-9]{40}"
               defaultValue={user?.wallet || ''}
               placeholder="0x…"
-              readOnly={edit}
-              className={edit ? 'is-locked' : ''}
+              readOnly={locked}
+              className={locked ? 'is-locked' : ''}
             />
-            {edit && (
+            {locked && (
               <svg className="um-lock" width="12" height="13" viewBox="0 0 12 13" fill="none">
                 <rect
                   x="1.5"
@@ -144,9 +147,11 @@ function UserForm({ user, onSubmit, onClose, busy }) {
         </label>
 
         <p className={edit ? 'um-note um-note-warn' : 'um-note um-note-info'}>
-          {edit
-            ? 'The wallet cannot be changed. Switching role requires revokeRole followed by grantRole.'
-            : 'The role is granted through a grantRole transaction from the Admin wallet.'}
+          {approve
+            ? `Approving grants the requested ${user?.requested_role || ''} role through a grantRole transaction.`
+            : edit
+              ? 'The wallet cannot be changed. Switching role requires revokeRole followed by grantRole.'
+              : 'The role is granted through a grantRole transaction from the Admin wallet.'}
         </p>
 
         <div className="um-actions">
@@ -154,7 +159,7 @@ function UserForm({ user, onSubmit, onClose, busy }) {
             Cancel
           </button>
           <button type="submit" className="um-primary" disabled={busy}>
-            {edit ? 'Save' : 'Save and grantRole'}
+            {approve ? 'Approve and grantRole' : edit ? 'Save' : 'Save and grantRole'}
           </button>
         </div>
       </form>
@@ -213,6 +218,14 @@ export default function UserManager({ users, me, busy, onAdd, onEdit, onDelete, 
 
   const people = useMemo(() => users.filter((u) => u.role && u.role !== 'None'), [users])
 
+  const pending = useMemo(
+    () =>
+      users.filter(
+        (u) => (!u.role || u.role === 'None') && u.requested_role && u.requested_role !== 'None',
+      ),
+    [users],
+  )
+
   const counts = useMemo(() => {
     const c = {}
     people.forEach((u) => {
@@ -254,6 +267,48 @@ export default function UserManager({ users, me, busy, onAdd, onEdit, onDelete, 
           Add user
         </button>
       </header>
+
+      {pending.length > 0 && (
+        <section className="um-pending">
+          <div className="um-pending-head">
+            <h2>Pending approvals</h2>
+            <span className="um-pending-count">{pending.length}</span>
+          </div>
+          <ul className="um-pending-list">
+            {pending.map((u) => (
+              <li className="um-pending-row" key={u.wallet}>
+                <span className="um-avatar">{initials(u.name || 'U')}</span>
+                <div className="um-pending-text">
+                  <b>{u.name || '—'}</b>
+                  <span className="um-mono">{shortAddr(u.wallet)}</span>
+                </div>
+                <span className="um-pending-req">
+                  requests <i style={{ color: ROLE_HEX[u.requested_role] }}>{u.requested_role}</i>
+                </span>
+                <button
+                  className="um-pending-approve"
+                  disabled={busy}
+                  onClick={() =>
+                    onAdd(
+                      {
+                        wallet: u.wallet,
+                        role: u.requested_role,
+                        name: u.name || '',
+                        nip: u.nip || '',
+                        unit: u.unit || '',
+                        email: u.email || '',
+                      },
+                      () => {},
+                    )
+                  }
+                >
+                  Approve
+                </button>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <div className="um-toolbar">
         <span className="um-search">
